@@ -46,8 +46,9 @@
 
 ### 4 Analysis
 
-- evaluation of different ranking algorithms based on speed and quality of the recommendations
+- compare different ranking algorithms based on speed and quality of the recommendations
 - evaluation of different data structures for the "recipies"
+- compare to different existing solutions
 
 ### 5 Extension
 
