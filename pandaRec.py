@@ -43,4 +43,3 @@ class Recommender():
     grid: DataGrid
     searchAlgorithm: SearchAlgorithm
 
-
