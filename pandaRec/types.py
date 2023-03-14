@@ -30,7 +30,7 @@ class context():
 @dataclass
 class RecipeResult():
     recipeId: int
-    score: int
+    score: float
 
 class SearchAlgorithm(ABC):
     @abstractmethod
