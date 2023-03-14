@@ -13,6 +13,7 @@
 - json: too verbose, not human readable
 - yaml: seems to be the best option
 - toml: more verbose than yaml, array of object especially verbose
+- csv: not human readable, not easy to edit, good python support
 
 proposed format:
 
