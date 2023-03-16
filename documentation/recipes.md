@@ -33,14 +33,14 @@ recipes:
 
 Seems reasonable until we have an absurd amount of recipes. How many recipes are possible should be investigated.
 
-## Refering to a recipe with name or id
+## Referring to a recipe with name or id
 
 Both are possible, if we refer to a recipe with name, we need to make sure that the name is unique.
 If we refer to a recipe with id, then removing a recipe is complicated without creating holes in the numbering.
 
 ## Code
 
-Using [Vscode Snippets](https://code.visualstudio.com/docs/editor/userdefinedsnippets) as basis.
+Using [VSCode Snippets](https://code.visualstudio.com/docs/editor/userdefinedsnippets) as basis.
 
 [EBNF](https://en.wikipedia.org/wiki/Extended_Backus-Naur_form) for VSC snippets:
 
