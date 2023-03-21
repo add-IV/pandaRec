@@ -43,4 +43,4 @@ The specific pros and cons of the algorithms are not known yet. However, we can 
 
 ## Analysing the effectiveness of the algorithms
 
-The most important metric will probably be user feedback. However, this is also the most difficult to measure since the package probably wont be used by a lot of people during development. Contacting domain experts might provide critical feedback. I could also use synthetic data to simulate user behavior. Easier to measure will be speed and memory usage.
+The most important metric will probably be user feedback. However, this is also the most difficult to measure since the package probably won't be used by a lot of people during development. Contacting domain experts might provide critical feedback. I could also use synthetic data to simulate user behaviour. Easier to measure will be speed and memory usage.
