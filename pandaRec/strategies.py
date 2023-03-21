@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod  # type: ignore
 from .context import Context
-from recipe import Recipe, RecipeResult
+from .recipe import Recipe, RecipeResult
 
 
 class RecommendStrategy(ABC):
