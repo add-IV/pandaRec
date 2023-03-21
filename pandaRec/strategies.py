@@ -1,6 +1,7 @@
-from abc import ABC, abstractmethod # type: ignore
-from context import Context
+from abc import ABC, abstractmethod  # type: ignore
+from .context import Context
 from recipe import Recipe, RecipeResult
+
 
 class RecommendStrategy(ABC):
     @abstractmethod
