@@ -1,5 +1,6 @@
-from dataclasses import dataclass
+from dataclasses import dataclass  # type: ignore
 from pandas import DataFrame
+
 
 @dataclass
 class Selection:

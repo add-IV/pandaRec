@@ -20,8 +20,8 @@ class PandaRecWidget(widgets.VBox):
             placeholder="Search term", description="Search:"
         )
 
-        self.search_term_widget.observe(self.update_recommendations, names='value') # type: ignore
-        self.data_grid.observe(self.update_recommendations, names="selected_cells") # type: ignore
+        self.search_term_widget.observe(self.update_recommendations, names="value")  # type: ignore
+        self.data_grid.observe(self.update_recommendations, names="selected_cells")  # type: ignore
 
         self.children = [self.data_grid, self.search_term_widget]
 

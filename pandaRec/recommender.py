@@ -3,6 +3,7 @@ from pandas import DataFrame
 from .context import Context, Selection
 from .strategies import RecommendStrategy
 
+
 class Recommender:
     recipes: list[Recipe]
     context: Context
