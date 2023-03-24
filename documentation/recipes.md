@@ -6,7 +6,12 @@
 - name: str
 - description: str
 - code: str
+
+optional:
+
 - keywords: str
+- schema: str
+- argument types: str
 
 ## Filetype
 
