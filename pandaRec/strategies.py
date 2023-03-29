@@ -16,6 +16,4 @@ class NameSearch(RecommendStrategy):
         for recipe in recipes:
             if context.search in recipe.name:
                 result.append(RecipeResult(1, recipe.id))
-            else:
-                result.append(RecipeResult(0, recipe.id))
         return result
