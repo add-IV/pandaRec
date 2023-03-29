@@ -1,5 +1,6 @@
 import pandas as pd
 import ipywidgets as widgets
+from IPython.display import clear_output
 import ipydatagrid
 from .recommender import Recommender
 
@@ -29,4 +30,5 @@ class PandaRecWidget(widgets.VBox):
         self.recommender.set_Search(str(self.search_term_widget.value))
         self.recommender.set_Selection(self.data_grid.selected_cells)
         self.recommender.recommend()
+        clear_output(wait=True)
         print(self.recommender.showResults())

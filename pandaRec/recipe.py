@@ -16,7 +16,7 @@ class Recipe:
         self.keywords = keywords
 
     def __str__(self) -> str:
-        return f"Recipe({self.id}, {self.name}, {self.description}, {self.code}, {self.keywords})"
+        return f"Recipe({self.id}, {self.name}, {self.description[0:99]}, {self.code}, {self.keywords})"
 
     @staticmethod
     def from_dict(d: dict):
