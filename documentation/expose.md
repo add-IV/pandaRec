@@ -30,7 +30,7 @@ Development of a basic ranking algorithm such as keyword matching or a basic str
 
 At this point we should have a usable base for implementing more complex features. The requirements for this Workpackage are only a working python installation and the pandas library.
 
-### 1b) Interface
+### 2 Interface
 
 Development of the interface by adding a table for the data, a search bar and space for the recommendations.
 
@@ -38,20 +38,20 @@ The current context should be linked to the recommender and the resulting snippe
 
 This step will require a dataframe visualizer (ipydatagrid) and the ipywidgets library.
 
-#### 2 Recipes
+### 3 Recipes
 
 The recipes are an important backbone of the project. Curating meaningful and useful snippets will increase the usefulness of the project by a lot. Snippets can be generated via the documentation, the dir() function and collected usage data. Handcrafted snippets could further increase overall quality.
 
-### 3 Ranking Algorithms
+### 4 Ranking Algorithms
 
 Multiple ranking algorithms should be considered. A name search or keyword search was already mentioned. Additionally, using immediate user feedback, i.e. looking at what snippets a user picked earlier, and using the structure of the DataFrame (types, groups coulum names, values) we should be able to improve the algorithm. The best results will probably be given by a combination of multiple algorithms. The different algorithms will be immplemented via a strategy pattern.
 
 Additionaly, offloading the ranking to a server as a microservice could help by collecting more user feedback from multiple users. The data collected with such an approach, together with data of usage of the pandas library collected online, could be used to train a model so that we can leverage machine learning for an algorithm.
 
-### 4 Analysis
+### 5 Analysis
 
 Theis soution could be analyzed by comparing different ranking algorithms, comparing different snippet sets, and comparing the whole solution to existing ones.
 
-### 5 Extension
+### 6 Extension
 
 The project could be extended further by using the algorithms to recommend snippets in vscode. Additionally, other the project could be expanded to recommend snippets for different libraries. Later work could use the system set in place with this project to use develop different recommendation algorithms.
