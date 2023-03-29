@@ -24,11 +24,14 @@ class PandaRecWidget(widgets.VBox):
         self.search_term_widget.observe(self.update_recommendations, names="value")  # type: ignore
         self.data_grid.observe(self.update_recommendations, names="selected_cells")  # type: ignore
 
-        self.children = [self.data_grid, self.search_term_widget]
+        self.results_widget = widgets.Output()
+
+        self.children = [self.data_grid, self.search_term_widget, self.results_widget]
 
     def update_recommendations(self, change):
         self.recommender.set_Search(str(self.search_term_widget.value))
         self.recommender.set_Selection(self.data_grid.selected_cells)
         self.recommender.recommend()
-        clear_output(wait=True)
-        print(self.recommender.showResults())
+        with self.results_widget:
+            clear_output(wait=True)
+            print(self.recommender.showResults())
