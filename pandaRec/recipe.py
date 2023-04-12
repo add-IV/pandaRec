@@ -29,10 +29,16 @@ class Recipe:
         )
     
     def show_as_result(self) -> str:
-        return f"{self.name} ({self.id}): {self.description[0:99]}"
+        return f"{self.name}"
 
 
 @dataclass
 class RecipeResult:
     score: float
     recipeId: int
+
+def getResultId(name: str, recipes: list[Recipe]) -> int:
+    return next((recipe.id for recipe in recipes if name == recipe.name), -1)
+
+def getRecipeById(id: int, recipes: list[Recipe]) -> Recipe | None:
+    return next((recipe for recipe in recipes if id == recipe.id), None)

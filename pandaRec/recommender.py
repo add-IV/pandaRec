@@ -36,7 +36,7 @@ class Recommender:
                 (x for x in self.recipes if x.id == recipeResult.recipeId), None
             )
             result += (
-                f"{recipe.show_as_result()}\nScore: {recipeResult.score}\n"
+                f"{recipe.show_as_result()}\t\tScore: {recipeResult.score}\n"
                 if recipe is not None
                 else ""
             )
