@@ -27,6 +27,9 @@ class Recipe:
             d["code"],
             d["keywords"],
         )
+    
+    def show_as_result(self) -> str:
+        return f"{self.name} ({self.id}): {self.description[0:99]}"
 
 
 @dataclass

@@ -1,8 +1,8 @@
-import pandas as pd
 import ipywidgets as widgets
 from IPython.display import clear_output
 import ipydatagrid
 from .recommender import Recommender
+import os
 
 
 class PandaRecWidget(widgets.VBox):
@@ -34,4 +34,6 @@ class PandaRecWidget(widgets.VBox):
         self.recommender.recommend()
         with self.results_widget:
             clear_output(wait=True)
-            print(self.recommender.showResults())
+            all_results = self.recommender.showResults()
+            only_20_lines = os.linesep.join(all_results.splitlines()[:20])
+            print(only_20_lines)

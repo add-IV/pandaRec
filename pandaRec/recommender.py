@@ -35,7 +35,11 @@ class Recommender:
             recipe = next(
                 (x for x in self.recipes if x.id == recipeResult.recipeId), None
             )
-            result += f"{recipe}: {recipeResult.score}\n"
+            result += (
+                f"{recipe.show_as_result()}\nScore: {recipeResult.score}\n"
+                if recipe is not None
+                else ""
+            )
         return result
 
     def set_Search(self, search: str):
