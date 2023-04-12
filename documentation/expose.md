@@ -36,22 +36,22 @@ Development of the interface by adding a table for the data, a search bar and sp
 
 The current context should be linked to the recommender and the resulting snippets back to the gui.
 
-This step will require a 
+This step will require a dataframe visualizer (ipydatagrid) and the ipywidgets library.
 
+### 3 Recipes
 
-### 3 Improvements
+The recipes are an important backbone of the project. Curating meaningful and useful snippets will increase the usefulness of the project by a lot. Snippets can be generated via the documentation, the dir() function and collected usage data. Handcrafted snippets could further increase overall quality.
 
-- implementing multiple ranking algorithms
-- improvement of "recipies" to recommend more complex operations
-- autodetect pandas column types
+### 4 Ranking Algorithms
 
-### 4 Analysis
+Multiple ranking algorithms should be considered. A name search or keyword search was already mentioned. Additionally, using immediate user feedback, i.e. looking at what snippets a user picked earlier, and using the structure of the DataFrame (types, groups coulum names, values) we should be able to improve the algorithm. The best results will probably be given by a combination of multiple algorithms. The different algorithms will be immplemented via a strategy pattern.
 
-- compare different ranking algorithms based on speed and quality of the recommendations
-- evaluation of different data structures for the "recipies"
-- compare to different existing solutions
+Additionaly, offloading the ranking to a server as a microservice could help by collecting more user feedback from multiple users. The data collected with such an approach, together with data of usage of the pandas library collected online, could be used to train a model so that we can leverage machine learning for an algorithm.
 
-### 5 Extension
+### 5 Analysis
 
-- extending the code recommendations to work without jupyter notebooks in vscode as an extension
-- extension of the code recommendations to other libraries
+Theis soution could be analyzed by comparing different ranking algorithms, comparing different snippet sets, and comparing the whole solution to existing ones.
+
+### 6 Extension
+
+The project could be extended further by using the algorithms to recommend snippets in vscode. Additionally, other the project could be expanded to recommend snippets for different libraries. Later work could use the system set in place with this project to use develop different recommendation algorithms.
