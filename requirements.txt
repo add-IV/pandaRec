@@ -3,3 +3,6 @@ ipydatagrid>=1.1.15
 pandas>=1.5.3
 pyyaml>=6.0
 thefuzz[speedup]>=0.19.0
+ipython>=8.10.0 # not directly required, pinned by Snyk to avoid a vulnerability
+numpy>=1.22.2 # not directly required, pinned by Snyk to avoid a vulnerability
+setuptools>=65.5.1 # not directly required, pinned by Snyk to avoid a vulnerability
