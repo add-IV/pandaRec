@@ -16,7 +16,7 @@ By recommending code snippets based on a search term and specific information on
 
 ## Methods/ Libraries
 
-Using jupyter notebooks we can create a gui that is easy to set up (e.g. in google colab) and recommends predefined recipes/ snippets. The GUI should have an overview over the data with e.g. the ipydatagrid library. It should also have a search bar and the recommended code snippets. As long as this is kept expandable, this solution might be applied to other contexts, such as coding in an IDE with recommendations based on the current dataframes loaded and the current line as a search term. For recommending code snippets, different algorithms should be implemented and compared.
+Using jupyter notebooks we can create a Gui that is easy to set up (e.g. in google colab) and recommends predefined recipes/ snippets. The Gui should have an overview over the data with e.g. the ipydatagrid library. It should also have a search bar and the recommended code snippets. As long as this is kept expandable, this solution might be applied to other contexts, such as coding in an IDE with recommendations based on the current dataframes loaded and the current line as a search term. For recommending code snippets, different algorithms should be implemented and compared.
 
 ## Workpackages
 
@@ -34,17 +34,17 @@ At this point we should have a usable base for implementing more complex feature
 
 Development of the interface by adding a table for the data, a search bar and space for the recommendations.
 
-The current context should be linked to the recommender and the resulting snippets back to the gui.
+The current context should be linked to the recommender and the resulting snippets back to the Gui.
 
 This step will require a dataframe visualizer (ipydatagrid) and the ipywidgets library.
 
 ### 3 Recipes
 
-The recipes are an important backbone of the project. Curating meaningful and useful snippets will increase the usefulness of the project by a lot. Snippets can be generated via the documentation, the dir() function and collected usage data. Handcrafted snippets could further increase overall quality.
+The recipes are an important backbone of the project. Curating meaningful and useful snippets will increase the usefulness of the project. Snippets can be generated via the documentation, the dir() function and collected usage data. Handcrafted snippets could further increase overall quality.
 
 ### 4 Ranking Algorithms
 
-Multiple ranking algorithms should be considered. A name search or keyword search was already mentioned. Additionally, using immediate user feedback, i.e. looking at what snippets a user picked earlier, and using the structure of the DataFrame (types, groups column names, values) we should be able to improve the algorithm. The best results will probably be given by a combination of multiple algorithms. The different algorithms will be implemented via a strategy pattern.
+Multiple ranking algorithms should be considered. A name search or keyword search was already mentioned. Additionally the structure of the DataFrame and immediate user feedback, i.e. looking at what snippets a user picked earlier, could be used to rank snippets. The best results will probably be given by a combination of multiple algorithms. The different algorithms will be implemented via a strategy pattern.
 
 Additionally, offloading the ranking to a server as a microservice could help by collecting more user feedback from multiple users. The data collected with such an approach, together with data of usage of the pandas library collected online, could be used to train a model so that we can leverage machine learning for an algorithm.
 
@@ -54,4 +54,4 @@ This solution could be analyzed by comparing different ranking algorithms, compa
 
 ### 6 Extension
 
-The project could be extended further by using the algorithms to recommend snippets in vscode. Additionally, other the project could be expanded to recommend snippets for different libraries. Later work could use the system set in place with this project to use develop different recommendation algorithms.
+The project could be extended further by using the algorithms to recommend snippets in vscode. Additionally, other projects could use this work to recommend snippets for different libraries. Later work could also use the system set in place with this project to develop different recommendation algorithms.
