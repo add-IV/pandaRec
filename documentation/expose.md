@@ -16,7 +16,7 @@ By recommending code snippets based on a search term and specific information on
 
 ## Methods/ Libraries
 
-Using jupyter notebooks we can create a Gui that is easy to set up (e.g. in google colab) and recommends predefined recipes/ snippets. The Gui should have an overview over the data with e.g. the ipydatagrid library. It should also have a search bar and the recommended code snippets. As long as this is kept expandable, this solution might be applied to other contexts, such as coding in an IDE with recommendations based on the current dataframes loaded and the current line as a search term. For recommending code snippets, different algorithms should be implemented and compared.
+Using jupyter notebooks we can create a Gui that is easy to set up (e.g. in google colab or your prefered IDE) and recommends predefined recipes/ snippets. The Gui should have an overview over the data with e.g. the ipydatagrid library. It should also have a search bar and the recommended code snippets. As long as this is kept expandable, this solution might be applied to other contexts, such as coding in an IDE with recommendations based on the current dataframes loaded and the current line as a search term. For recommending code snippets, different algorithms should be implemented and compared.
 
 ## Workpackages
 
