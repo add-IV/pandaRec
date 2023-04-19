@@ -8,11 +8,19 @@ import os
 
 class ResultWidget(widgets.GridBox):
     num_results = 20
-    def __init__(self, num_results = 20) -> None:
+
+    def __init__(self, num_results=20) -> None:
         super().__init__()
         self.layout = widgets.Layout(grid_template_columns="1fr 1fr 5fr", width="100%")
         self.num_results = num_results
-        self.recipes = [[widgets.Label(), widgets.Label(), widgets.Textarea(layout=widgets.Layout(width="100%"))]  for _ in range(num_results)]
+        self.recipes = [
+            [
+                widgets.Label(),
+                widgets.Label(),
+                widgets.Textarea(layout=widgets.Layout(width="100%")),
+            ]
+            for _ in range(num_results)
+        ]
         self.children = [item for sublist in self.recipes for item in sublist]
         print(self.children)
 
