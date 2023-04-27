@@ -38,9 +38,9 @@ class RecipeResult:
     recipeId: int
 
 
-def getResultId(name: str, recipes: list[Recipe]) -> int:
+def get_result_id(name: str, recipes: list[Recipe]) -> int:
     return next((recipe.id for recipe in recipes if name == recipe.name), -1)
 
 
-def getRecipeById(id: int, recipes: list[Recipe]) -> "Recipe | None":
+def get_recipe_by_id(id: int, recipes: list[Recipe]) -> "Recipe | None":
     return next((recipe for recipe in recipes if id == recipe.id), None)

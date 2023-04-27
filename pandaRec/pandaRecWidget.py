@@ -28,7 +28,7 @@ class ResultWidget(widgets.GridBox):
         for idx, recipeResult in enumerate(recipeResults):
             if idx >= self.num_results:
                 continue
-            recipe = getRecipeById(recipeResult.recipeId, recipes)
+            recipe = get_recipe_by_id(recipeResult.recipeId, recipes)
             if recipe is not None:
                 self.recipes[idx][0].value = recipe.name
                 self.recipes[idx][1].value = str(recipeResult.score)
