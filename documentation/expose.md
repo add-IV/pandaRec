@@ -30,6 +30,8 @@ Development of a basic ranking algorithm such as keyword matching or a basic str
 
 At this point we should have a usable base for implementing more complex features. The requirements for this Workpackage are only a working python installation and the pandas library.
 
+<div style="page-break-after: always;"></div>
+
 ### 2 Interface
 
 Development of the interface by adding a table for the data, a search bar and space for the recommendations.
