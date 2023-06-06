@@ -20,6 +20,8 @@ optional:
 - toml: more verbose than yaml, array of object especially verbose
 - csv: not human readable, not easy to edit, good python support
 
+after using yaml for a while, i'm not sure if it's the best option. However since it doesn't make a big difference, i'll stick with it for now.
+
 proposed format:
 
 ```yaml
@@ -43,7 +45,11 @@ Seems reasonable until we have an absurd amount of recipes. How many recipes are
 Both are possible, if we refer to a recipe with name, we need to make sure that the name is unique.
 If we refer to a recipe with id, then removing a recipe is complicated without creating holes in the numbering.
 
+For now i'm going with id, since it's easier to implement.
+
 ## Code
+
+The code field either shows an example of the code, or later an actual snippet that automatically uses the right column names, df name, etc. snippets like how vscode does it seems reasonable.
 
 Using [VSCode Snippets](https://code.visualstudio.com/docs/editor/userdefinedsnippets) as basis.
 
@@ -82,6 +88,8 @@ Changes to be made:
 ## Autogenerating recipes
 
 Could scrape the pandas documentation and generate recipes from there.
+
+Update: scraped the pandas documentation, but it's not very useful. The examples are good, and the documentation is consistent but it's not very useful for generating recipes since it has an entry per function, not per task. Furthermore, the examples are not always very good.
 
 ## Keywords
 
