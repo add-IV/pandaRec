@@ -12,7 +12,7 @@ Because of pandas complexity, it is hard to use for people without much programm
 
 ## Solution
 
-By recommending code snippets based on a search term and specific information on the data, the learning curve should be flattened.
+By recommending code snippets based on a search term and specific information on the data, such as data types and column names, using the pandas library should become easier for scientists of all fields, who could then use it to analyze their data, as well as beginners in programming, who could use it to learn the basics of data manipulation. The solution should be easy to set up and use, while also being expandable and adaptable to different contexts.
 
 ## Methods/ Libraries
 
