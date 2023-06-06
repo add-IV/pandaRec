@@ -24,9 +24,9 @@ class FuzzySearchTitle(RecommendStrategy):
     @staticmethod
     def search(context: Context, recipes: list[Recipe]) -> list[RecipeResult]:
         titles = [recipe.name for recipe in recipes]
-        extracted: list[tuple[str, int]] = process.extract(context.search, titles, limit=20)  # type: ignore
+        matches: list[tuple[str, int]] = process.extract(context.search, titles, limit=20)  # type: ignore
         result = [
-            RecipeResult(one[1], get_result_id(one[0], recipes)) for one in extracted
+            RecipeResult(score = one_match[1], recipeId = get_result_id(one_match[0], recipes)) for one_match in matches
         ]
         return result
 
