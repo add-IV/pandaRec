@@ -20,8 +20,8 @@ class Context:
         self.data = data
         self.search = search
 
-    def isWholeRow(self, selection: Selection) -> bool:
+    def is_whole_row(self, selection: Selection) -> bool:
         return selection.c1 == 0 and selection.c2 == self.data.shape[1]
 
-    def isWholeColumn(self, selection: Selection) -> bool:
+    def is_whole_column(self, selection: Selection) -> bool:
         return selection.r1 == 0 and selection.r2 == self.data.shape[0]

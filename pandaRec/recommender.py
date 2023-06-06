@@ -26,10 +26,10 @@ class Recommender:
             self.context, self.recipes
         )
 
-    def importRecipes(self, recipes: list[Recipe]):
+    def import_recipes(self, recipes: list[Recipe]):
         self.recipes = recipes
 
-    def showResults(self) -> str:
+    def show_results(self) -> str:
         result = ""
         for recipeResult in self.recommendedRecipes:
             recipe = next(
@@ -42,8 +42,8 @@ class Recommender:
             )
         return result
 
-    def set_Search(self, search: str):
+    def set_search(self, search: str):
         self.context.search = search
 
-    def set_Selection(self, selections: list[Selection]):
+    def set_selection(self, selections: list[Selection]):
         self.context.selections = selections

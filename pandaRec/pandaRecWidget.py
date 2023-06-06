@@ -63,8 +63,8 @@ class PandaRecWidget(widgets.VBox):
         self.children = [self.data_grid, self.search_term_widget, self.results_widget]
 
     def update_recommendations(self, change):
-        self.recommender.set_Search(str(self.search_term_widget.value))
-        self.recommender.set_Selection(self.data_grid.selected_cells)
+        self.recommender.set_search(str(self.search_term_widget.value))
+        self.recommender.set_selection(self.data_grid.selected_cells)
         self.recommender.recommend()
         self.results_widget.update(
             self.recommender.recommendedRecipes, self.recommender.recipes
