@@ -53,7 +53,3 @@ Additionally, offloading the ranking to a server as a microservice could help by
 ### 5 Analysis
 
 This solution could be analyzed by comparing different ranking algorithms, comparing different snippet sets, and comparing the whole solution to existing ones.
-
-### 6 Extension
-
-The project could be extended further by using the algorithms to recommend snippets in vscode. Additionally, other projects could use this work to recommend snippets for different libraries. Later work could also use the system set in place with this project to develop different recommendation algorithms.
