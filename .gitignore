@@ -1,3 +1,6 @@
+# stackoverflow data
+data_loading/posts
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
