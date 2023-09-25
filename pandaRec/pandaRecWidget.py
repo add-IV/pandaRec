@@ -24,15 +24,14 @@ class ResultWidget(widgets.GridBox):
         self.children = [item for sublist in self.recipes for item in sublist]
         print(self.children)
 
-    def update(self, recipeResults: list[RecipeResult], recipes: list[Recipe]):
+    def update(self, recipeResults: list[RecipeResult]):
         for idx, recipeResult in enumerate(recipeResults):
             if idx >= self.num_results:
                 continue
-            recipe = get_recipe_by_id(recipeResult.recipeId, recipes)
-            if recipe is not None:
-                self.recipes[idx][0].value = recipe.name
+            if recipeResult.recipe is not None:
+                self.recipes[idx][0].value = recipeResult.recipe.name
                 self.recipes[idx][1].value = str(recipeResult.score)
-                self.recipes[idx][2].value = recipe.description
+                self.recipes[idx][2].value = recipeResult.recipe.description
             else:
                 self.recipes[idx][0].value = "Recipe not found"
                 self.recipes[idx][1].value = ""
@@ -66,6 +65,4 @@ class PandaRecWidget(widgets.VBox):
         self.recommender.set_search(str(self.search_term_widget.value))
         self.recommender.set_selection(self.data_grid.selected_cells)
         self.recommender.recommend()
-        self.results_widget.update(
-            self.recommender.recommendedRecipes, self.recommender.recipes
-        )
+        self.results_widget.update(self.recommender.recommendedRecipes)
