@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 
 
+@dataclass
 class Recipe:
     id: int
     name: str
@@ -15,18 +16,9 @@ class Recipe:
         self.code = code
         self.keywords = keywords
 
-    def __str__(self) -> str:
-        return f"Recipe({self.id}, {self.name}, {self.description[0:99]}, {self.code}, {self.keywords})"
-
     @staticmethod
     def from_dict(d: dict):
-        return Recipe(
-            d["id"],
-            d["name"],
-            d["description"],
-            d["code"],
-            d["keywords"],
-        )
+        return Recipe(**d)
 
     def show_as_result(self) -> str:
         return f"{self.name}"
@@ -35,11 +27,11 @@ class Recipe:
 @dataclass
 class RecipeResult:
     score: float
-    recipeId: int
+    recipe: Recipe
 
 
-def get_result_id(name: str, recipes: list[Recipe]) -> int:
-    return next((recipe.id for recipe in recipes if name == recipe.name), -1)
+def get_recipe_by_name(name: str, recipes: list[Recipe]) -> "Recipe":
+    return next((recipe for recipe in recipes if name == recipe.name))
 
 
 def get_recipe_by_id(id: int, recipes: list[Recipe]) -> "Recipe | None":
