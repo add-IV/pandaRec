@@ -7,7 +7,7 @@ from .strategies import RecommendStrategy
 class Recommender:
     recipes: list[Recipe]
     context: Context
-    recommendStrategy: RecommendStrategy
+    searchAlgorithm: RecommendStrategy
     recommendedRecipes: list[RecipeResult]
 
     def __init__(
@@ -32,14 +32,7 @@ class Recommender:
     def show_results(self) -> str:
         result = ""
         for recipeResult in self.recommendedRecipes:
-            recipe = next(
-                (x for x in self.recipes if x.id == recipeResult.recipeId), None
-            )
-            result += (
-                f"{recipe.show_as_result()}\t\tScore: {recipeResult.score}\n"
-                if recipe is not None
-                else ""
-            )
+            result += f"{recipeResult.recipe.show_as_result()}\t\tScore: {recipeResult.score}\n"
         return result
 
     def set_search(self, search: str):
