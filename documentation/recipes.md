@@ -21,6 +21,7 @@ optional:
 - csv: not human readable, not easy to edit, good python support
 
 after using yaml for a while, i'm not sure if it's the best option. However since it doesn't make a big difference, i'll stick with it for now.
+json might be better since it's more widely used.
 
 proposed format:
 
