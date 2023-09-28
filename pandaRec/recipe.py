@@ -9,19 +9,9 @@ class Recipe:
     code: str
     keywords: str
 
-    def __init__(self, id: int, name: str, description: str, code: str, keywords: str):
-        self.id = id
-        self.name = name
-        self.description = description
-        self.code = code
-        self.keywords = keywords
-
     @staticmethod
     def from_dict(d: dict):
         return Recipe(**d)
-
-    def show_as_result(self) -> str:
-        return f"{self.name}"
 
 
 @dataclass
