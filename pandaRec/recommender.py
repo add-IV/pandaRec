@@ -7,22 +7,22 @@ from .strategies import RecommendStrategy
 class Recommender:
     recipes: list[Recipe]
     context: Context
-    searchAlgorithm: RecommendStrategy
-    recommendedRecipes: list[RecipeResult]
+    search_algorithm: RecommendStrategy
+    recommended_recipes: list[RecipeResult]
 
     def __init__(
         self,
         recipes: list[Recipe],
         df: DataFrame,
-        searchAlgorithm: RecommendStrategy,
+        search_algorithm: RecommendStrategy,
     ):
         self.recipes = recipes
         self.context = Context([], df, "")
-        self.searchAlgorithm = searchAlgorithm
-        self.recommendedRecipes = []
+        self.search_algorithm = search_algorithm
+        self.recommended_recipes = []
 
     def recommend(self):
-        self.recommendedRecipes = self.searchAlgorithm.search(
+        self.recommended_recipes = self.search_algorithm.search(
             self.context, self.recipes
         )
 
@@ -31,8 +31,8 @@ class Recommender:
 
     def show_results(self) -> str:
         result = ""
-        for recipeResult in self.recommendedRecipes:
-            result += f"{recipeResult.recipe.show_as_result()}\t\tScore: {recipeResult.score}\n"
+        for recipe_result in self.recommended_recipes:
+            result += f"{recipe_result.recipe.name}\t\tScore: {recipe_result.score}\n"
         return result
 
     def set_search(self, search: str):

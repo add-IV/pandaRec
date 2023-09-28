@@ -54,7 +54,7 @@ class FuzzySearchDescription(RecommendStrategy):
                 scores[idx] += self.ratio(word, recipes[idx].description)
         scores = [score / len(words) for score in scores]
         result = [RecipeResult(score, recipe) for score, recipe in zip(scores, recipes)]
-        result.sort(key=lambda recipeResult: recipeResult.score, reverse=True)
+        result.sort(key=lambda recipe_result: recipe_result.score, reverse=True)
         return result
 
 
@@ -80,7 +80,7 @@ class IndexSearch(RecommendStrategy):
             RecipeResult(score / num_words, recipe)
             for score, recipe in zip(scores, recipes)
         ]
-        result.sort(key=lambda recipeResult: recipeResult.score, reverse=True)
+        result.sort(key=lambda recipe_result: recipe_result.score, reverse=True)
         return result
 
 
@@ -100,5 +100,5 @@ class SemanticSearch(RecommendStrategy):
         result = [
             RecipeResult(score, recipe) for recipe, score in zip(recipes, cos_scores)
         ]
-        result.sort(key=lambda recipeResult: recipeResult.score, reverse=True)
+        result.sort(key=lambda recipe_result: recipe_result.score, reverse=True)
         return result
