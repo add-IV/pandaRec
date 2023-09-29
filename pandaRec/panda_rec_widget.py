@@ -79,12 +79,7 @@ class PandaRecWidget(widgets.VBox):
 
         self.children = [self.data_grid, self.search_term_widget, self.results_widget]
 
-    @T.observe("df")
-    def _on_df_change(self, change):
-        print("changed")
-
     def update_recommendations(self, change):
-        print(change)
         self.recommender.set_search(str(self.search_term_widget.value))
         self.recommender.set_selection(self.data_grid.selected_cells)
         self.recommender.recommend()
