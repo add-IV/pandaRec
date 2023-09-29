@@ -13,12 +13,12 @@ class Selection:
 class Context:
     selections: list[Selection]
     data: DataFrame
-    search: str
+    query: str
 
     def __init__(self, selections: list[Selection], data: DataFrame, search: str):
         self.selections = selections
         self.data = data
-        self.search = search
+        self.query = search
 
     def is_whole_row(self, selection: Selection) -> bool:
         return selection.c1 == 0 and selection.c2 == self.data.shape[1]
