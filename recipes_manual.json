@@ -1,0 +1,210 @@
+{
+    "description": "a list of manually created recipes",
+    "embeddings": [],
+    "name": "manual_recipes",
+    "recipes": [
+        {
+            "code": "head, top, first, rows, n",
+            "description": "show the top n rows of the dataframe",
+            "id": 0,
+            "keywords": "df.head(${1:5})",
+            "name": "head"
+        },
+        {
+            "code": "tail, bottom, last, rows, n",
+            "description": "show the bottom n rows of the dataframe",
+            "id": 0,
+            "keywords": "df.tail(${1:5})",
+            "name": "tail"
+        },
+        {
+            "code": "info, information, data, frame, dataframe",
+            "description": "show the info of the dataframe",
+            "id": 0,
+            "keywords": "df.info(verbose=${1:False})",
+            "name": "info"
+        },
+        {
+            "code": "index, indices, data, frame, dataframe",
+            "description": "show the index of the dataframe",
+            "id": 0,
+            "keywords": "df.index",
+            "name": "index"
+        },
+        {
+            "code": "columns, cols, data, frame, dataframe",
+            "description": "show the columns of the dataframe",
+            "id": 0,
+            "keywords": "df.columns",
+            "name": "columns"
+        },
+        {
+            "code": "dtypes, data, types, frame, dataframe",
+            "description": "list the dtypes of the dataframe",
+            "id": 0,
+            "keywords": "df.dtypes",
+            "name": "dtypes"
+        },
+        {
+            "code": "shape, data, frame, dataframe",
+            "description": "show the shape of the dataframe",
+            "id": 0,
+            "keywords": "df.shape",
+            "name": "shape"
+        },
+        {
+            "code": "describe, summary, statistics, stats, data, frame, dataframe",
+            "description": "show a quick statistic summary of the dataframe",
+            "id": 0,
+            "keywords": "df.describe(percentiles=${1:None}, include=${2:None}, exclude=${3:None}, datetime_is_numeric=${4:False})",
+            "name": "describe"
+        },
+        {
+            "code": "transpose, transposed, data, frame, dataframe",
+            "description": "transpose the dataframe",
+            "id": 0,
+            "keywords": "df.T",
+            "name": "transpose"
+        },
+        {
+            "code": "sort, index, indices, data, frame, dataframe",
+            "description": "\"sort the index of the dataframe.\naxis: 0 is rows, axis 1 is columns.\nascending: True sorts in ascending order, False sorts in descending order.\nna_position: 'first' puts NaNs at the beginning, 'last' puts NaNs at the end.\nignore_index: True does not sort the index, False sorts the index.\nkey: function to use for sorting the index.\ninplace: True modifies the dataframe, False returns a copy of the dataframe.\"",
+            "id": 0,
+            "keywords": "df.sort_index(axis=${1:0}, ascending=${2:True}, inplace=${3:True}, kind=${4:'quicksort'}, na_position=${5:'last'}, ignore_index=${6:False}, key=${7:None}, inplace=${8:False})",
+            "name": "sort index"
+        },
+        {
+            "code": "sort, values, data, frame, dataframe",
+            "description": "\"sort the values of the dataframe\nby: columns to sort by\naxis: 0 is rows, axis 1 is columns.\nascending: True sorts in ascending order, False sorts in descending order.\nna_position: 'first' puts NaNs at the beginning, 'last' puts NaNs at the end.\nignore_index: True does not sort the index, False sorts the index.\nkey: function to use for sorting the index.\ninplace: True modifies the dataframe, False returns a copy of the dataframe.\"",
+            "id": 0,
+            "keywords": "df.sort_values(by=${1:columns}, axis=${2:0}, ascending=${3:True}, inplace=${4:True}, kind=${5:'quicksort'}, na_position=${6:'last'}, ignore_index=${7:False}, key=${8:None})",
+            "name": "sort values"
+        },
+        {
+            "code": "select, slice, rows, data, frame, dataframe",
+            "description": "select a slice of the dataframe matching the given rows",
+            "id": 0,
+            "keywords": "df[${1:0}:${2:10}]",
+            "name": "select row slice"
+        },
+        {
+            "code": "select, columns, data, frame, dataframe",
+            "description": "select a slice of the dataframe matching the given columns",
+            "id": 0,
+            "keywords": "df.loc[:, ${1:columns}]",
+            "name": "select columns"
+        },
+        {
+            "code": "select, slice, rows, columns, data, frame, dataframe",
+            "description": "select a slice of the dataframe matching the given rows and columns",
+            "id": 0,
+            "keywords": "df.loc[${1:0}:${2:10}, ${3:columns}]",
+            "name": "select rows and columns"
+        },
+        {
+            "code": "select, slice, rows, data, frame, dataframe",
+            "description": "select a slice of the dataframe via the position of the passed integers",
+            "id": 0,
+            "keywords": "df.iloc[${1:0}:${2:10}]",
+            "name": "select rows by integer location"
+        },
+        {
+            "code": "select, slice, rows, columns, data, frame, dataframe",
+            "description": "select a slice of the dataframe via the position of the passed integers",
+            "id": 0,
+            "keywords": "df.iloc[${1:0}:${2:10}, ${3:columns}]",
+            "name": "select rows and columns by integer location"
+        },
+        {
+            "code": "select, slice, rows, data, frame, dataframe",
+            "description": "select a slice of the dataframe via the boolean vector",
+            "id": 0,
+            "keywords": "df[${1:df['column'] == 'value'}]",
+            "name": "select rows by boolean vector"
+        },
+        {
+            "code": "reindex, index, indices, data, frame, dataframe",
+            "description": "\"change the index of the dataframe, this allows you to change/add/delete the index on a specified axis\nindex: new sequence to use as index\ncolumns: new sequence to use as columns\nfill_value: value to use for missing values\nmethod: method to use for filling holes in reindexed DataFrame: none, 'pad'/'ffill', 'backfill'/'bfill', 'nearest'\ncopy: return a new object, even if the passed indexes are the same\nlevel: broadcast across a level, matching Index values on the passed MultiIndex level\nlimit: maximum number of consecutive elements to forward or backward fill\ntolerance: maximum distance between original and new labels for inexact matches. The values of the index at the matching locations most satisfy the equation abs(index[indexer] - target) <= tolerance.\"",
+            "id": 0,
+            "keywords": "df.reindex(index=${1:df.index}, columns=${2:None}, fill_value=${3:None}, method=${4:None}, copy=${5:True}, level=${6:None}, limit=${7:None}, tolerance=${8:None})",
+            "name": "reindex"
+        },
+        {
+            "code": "drop, labels, data, frame, dataframe",
+            "description": "\"drop specified labels from rows or columns\nlabels: single label or list-like\naxis: 0 is rows, axis 1 is columns\ninplace: True modifies the dataframe, False returns a copy of the dataframe\"",
+            "id": 0,
+            "keywords": "df.drop(labels=${1:None}, axis=${2:0}, inplace=${6:True})",
+            "name": "drop"
+        },
+        {
+            "code": "dropna, na, missing, values, data, frame, dataframe",
+            "description": "\"drop rows or columns with missing values\naxis: Determines if rows or columns are removed. 0 is rows, axis 1 is columns.\nhow: Determines if row or column is removed when we have at least one NA or all NA. 'any' removes the row/column if any NA values are present. 'all' removes the row/column if all values are NA.\ninplace: True modifies the dataframe, False returns a copy of the dataframe\"",
+            "id": 0,
+            "keywords": "df.dropna(axis=${1:0}, how=${2:'any'}, inplace=${5:True})",
+            "name": "drop missing values"
+        },
+        {
+            "code": "fillna, na, missing, values, data, frame, dataframe",
+            "description": "\"fill NA/NaN values using the specified method\nvalue: scalar, dict, Series, or DataFrame\ninplace: True modifies the dataframe, False returns a copy of the dataframe\"",
+            "id": 0,
+            "keywords": "df.fillna(value=${1:None}, inplace=${4:True})",
+            "name": "fill missing values with value"
+        },
+        {
+            "code": "fillna, na, missing, values, data, frame, dataframe",
+            "description": "\"fill NA/NaN values using the previous value\naxis: 0 is rows, axis 1 is columns\ninplace: True modifies the dataframe, False returns a copy of the dataframe\"",
+            "id": 0,
+            "keywords": "df.ffill(axis=${2:0}, inplace=${3:True})",
+            "name": "forward fill missing values"
+        },
+        {
+            "code": "fillna, na, missing, values, data, frame, dataframe",
+            "description": "\"fill NA/NaN values using the next value\naxis: 0 is rows, axis 1 is columns\ninplace: True modifies the dataframe, False returns a copy of the dataframe\"",
+            "id": 0,
+            "keywords": "df.bfill(axis=${2:0}, inplace=${3:True})",
+            "name": "backward fill missing values"
+        },
+        {
+            "code": "is, na, missing, values, data, frame, dataframe",
+            "description": "detect missing values",
+            "id": 0,
+            "keywords": "pd.isna(df)",
+            "name": "is na"
+        },
+        {
+            "code": "mean, average, data, frame, dataframe",
+            "description": "compute the mean of the values for the each column",
+            "id": 0,
+            "keywords": "df.mean(numeric_only=${1:True})",
+            "name": "mean of columns"
+        },
+        {
+            "code": "mean, average, data, frame, dataframe",
+            "description": "compute the mean of the values for the each row",
+            "id": 0,
+            "keywords": "df.mean(axis=${1:1}, numeric_only=${1:True})",
+            "name": "mean of rows"
+        },
+        {
+            "code": "median, data, frame, dataframe",
+            "description": "compute the median of the values for the each column",
+            "id": 0,
+            "keywords": "df.median(numeric_only=${1:True})",
+            "name": "median of columns"
+        },
+        {
+            "code": "median, data, frame, dataframe",
+            "description": "compute the median of the values for the each row",
+            "id": 0,
+            "keywords": "df.median(axis=${1:1}, numeric_only=${1:True})",
+            "name": "median of rows"
+        },
+        {
+            "code": "value, counts, data, frame, dataframe",
+            "description": "compute the counts of unique values",
+            "id": 0,
+            "keywords": "df.value_counts()",
+            "name": "value counts"
+        }
+    ]
+}
