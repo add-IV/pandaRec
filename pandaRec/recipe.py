@@ -20,6 +20,21 @@ class RecipeResult:
     recipe: Recipe
 
 
+@dataclass
+class embedding:
+    name: str
+    path: str
+    model: str
+
+
+@dataclass
+class RecipeCollection:
+    name: str
+    description: str
+    embeddings: list[embedding]
+    recipes: list[Recipe]
+
+
 def get_recipe_by_name(name: str, recipes: list[Recipe]) -> "Recipe":
     return next((recipe for recipe in recipes if name == recipe.name))
 
