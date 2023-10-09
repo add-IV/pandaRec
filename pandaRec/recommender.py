@@ -6,7 +6,7 @@ from .strategies import RankingStrategy
 
 class Recommender:
     context: Context
-    search_algorithm: RankingStrategy
+    strategy: RankingStrategy
     recipes: list[Recipe]
     recommended_recipes: list[RecipeResult]
 
@@ -14,23 +14,20 @@ class Recommender:
         self,
         recipes: list[Recipe],
         df: DataFrame,
-        recommend_strategy: RankingStrategy,
+        strategy: RankingStrategy,
     ):
         self.recipes = recipes
         self.context = Context([], df, "")
-        self.search_algorithm = recommend_strategy
+        self.strategy = strategy
         self.recommended_recipes = []
 
     def recommend(self):
-        self.recommended_recipes = self.search_algorithm.search(
-            self.context, self.recipes
-        )
+        self.recommended_recipes = self.strategy.search(self.context, self.recipes)
 
-    def show_results(self) -> str:
-        result = ""
-        for recipe_result in self.recommended_recipes:
-            result += f"{recipe_result.recipe.name}\t\tScore: {recipe_result.score}\n"
-        return result
+    def show_results(self, n=None) -> list[RecipeResult]:
+        if n is None:
+            return self.recommended_recipes
+        return self.recommended_recipes[:n]
 
     def import_recipes(self, recipes: list[Recipe]):
         self.recipes = recipes
