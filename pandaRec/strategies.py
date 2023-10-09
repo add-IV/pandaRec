@@ -10,6 +10,7 @@ from .search_index import (
     load_search_index,
     lemmatize_no_stop_words,
 )
+from openai.embeddings_utils import get_embedding, cosine_similarity, get_embeddings
 
 
 class RankingStrategy(ABC):
@@ -72,9 +73,11 @@ class IndexSearch(RankingStrategy):
         # add 1 to the score for each word that is in the description (per recipe)
         scores = len(recipes) * [0]
         for word in lemmatized_search:
-            if word in self.index:
-                for idx, _ in self.index[word]:
+            for idx, _ in self.index.get(word, []):
+                try:
                     scores[idx] += 1
+                except IndexError:
+                    print(idx)
 
         num_words = len(lemmatized_search)
         result = [
@@ -105,6 +108,36 @@ class SemanticSearch(RankingStrategy):
     def search(self, context: Context, recipes: list[Recipe]) -> list[RecipeResult]:
         query_embedding = self.model.encode(context.query, convert_to_tensor=True)
         cos_scores = [util.cos_sim(query_embedding, embedding).item() for embedding in self.embeddings]  # type: ignore
+        result = [
+            RecipeResult(score, recipe) for recipe, score in zip(recipes, cos_scores)
+        ]
+        result.sort(key=lambda recipe_result: recipe_result.score, reverse=True)
+        return result
+
+
+class OpenAIEmbeddings(RankingStrategy):
+    def __init__(
+        self,
+        recipes: list[Recipe],
+        path: str = "",
+        model: str = "text-embedding-ada-002",
+    ):
+        super().__init__()
+        self.model = model
+        descriptions = [
+            recipe.description if recipe.description else "None" for recipe in recipes
+        ]
+        if not path:
+            self.embeddings = get_embeddings(descriptions, engine=self.model)
+        else:
+            self.embeddings = load_embeddings(path)
+
+    def search(self, context: Context, recipes: list[Recipe]) -> list[RecipeResult]:
+        query_embedding = get_embedding(context.query, engine=self.model)
+        cos_scores = [
+            cosine_similarity(query_embedding, embedding)
+            for embedding in self.embeddings
+        ]
         result = [
             RecipeResult(score, recipe) for recipe, score in zip(recipes, cos_scores)
         ]
