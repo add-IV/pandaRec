@@ -21,8 +21,9 @@ class RecipeResult:
 
 
 @dataclass
-class embedding:
+class Embedding:
     name: str
+    algorithm: str
     path: str
     model: str
 
@@ -31,7 +32,7 @@ class embedding:
 class RecipeCollection:
     name: str
     description: str
-    embeddings: list[embedding]
+    embeddings: list[Embedding]
     recipes: list[Recipe]
 
 
