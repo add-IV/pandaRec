@@ -38,10 +38,11 @@ def generate_search_index(descriptions: list[str]) -> dict[str, list[tuple[int, 
         [(word, description.count(word)) for word in set(description)]
         for description in lemmatized_descriptions
     ]
+    print(len(frequency_per_description))
     # 3. construct the inverted index, one list of (description_index, frequency) tuples per word
     frequency_per_word = {}
-    for description in frequency_per_description:
-        for idx, (word, count) in enumerate(description):
+    for idx, description in enumerate(frequency_per_description):
+        for word, count in description:
             if word not in frequency_per_word:
                 frequency_per_word[word] = [(idx, count)]
             else:
