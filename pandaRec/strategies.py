@@ -133,6 +133,8 @@ class OpenAIEmbeddings(RankingStrategy):
             self.embeddings = load_embeddings(path)
 
     def search(self, context: Context, recipes: list[Recipe]) -> list[RecipeResult]:
+        if context.query == "":
+            return []
         query_embedding = get_embedding(context.query, engine=self.model)
         cos_scores = [
             cosine_similarity(query_embedding, embedding)
