@@ -6,9 +6,18 @@ import pickle
 
 
 def lemmatize_no_stop_words(text: str) -> list[str]:
-    nltk.download("wordnet")
-    nltk.download("omw-1.4")
-    nltk.download("stopwords")
+    try:
+        nltk.data.find("corpora/wordnet")
+    except LookupError:
+        nltk.download("wordnet")
+    try:
+        nltk.data.find("corpora/omw-1.4")
+    except LookupError:
+        nltk.download("omw-1.4")
+    try:
+        nltk.data.find("corpora/stopwords")
+    except LookupError:
+        nltk.download("stopwords")
     wnl = WordNetLemmatizer()
     words = re.findall(r"\w*[a-zA-Z]\w*", text)
     return [
