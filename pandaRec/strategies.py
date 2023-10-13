@@ -124,9 +124,7 @@ class OpenAIEmbeddings(RankingStrategy):
     ):
         super().__init__()
         self.model = model
-        descriptions = [
-            recipe.description if recipe.description else "None" for recipe in recipes
-        ]
+        descriptions = [recipe.description for recipe in recipes]
         if not path:
             self.embeddings = get_embeddings(descriptions, engine=self.model)
         else:
