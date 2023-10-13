@@ -1,12 +1,11 @@
 import ipywidgets as widgets
-from IPython.display import display, HTML
 import pyperclip
 from threading import Timer
 
 
 def copybutton(text, html=False):
     if html:
-        return HTMLCopyButton(text).get_widget()
+        return HTMLCopyButton(text)
     else:
         return CopyButton(text)
 
@@ -19,6 +18,9 @@ class CopyButton(widgets.Button):
         self.copytext = copytext
         self.timer = None
         self.on_click(self.copy)
+
+    def set_copytext(self, copytext):
+        self.copytext = copytext
 
     def copy(self, _self2):
         if self.timer:
@@ -36,35 +38,18 @@ class CopyButton(widgets.Button):
         self.icon = "check"
 
 
-class HTMLCopyButton(object):
+class HTMLCopyButton(widgets.HTML):
     def __init__(self, copytext):
-        self.description = "Copy"
-        self.icon = "copy"
         self.copytext = copytext
+        self.set_copytext(copytext)
         self.timer = None
 
-    def get_widget(self):
-        buttontext = """
-        <button onclick="copyToClipboard(this)" icon="copy" data-copytext="{}">
+    def set_copytext(self, copytext):
+        self.copytext = copytext
+        self.value = """
+        <button onclick=navigator.clipboard.writeText('{}') icon="copy">
             Copy
         </button>
-        """
-        return widgets.HTML(buttontext.format(self.copytext))
-
-    def _setup_copy_script(self):
-        display(
-            HTML(
-                """
-        <script>
-        function copyToClipboard(button) {
-            var dummy = document.createElement("textarea");
-            document.body.appendChild(dummy);
-            dummy.value = button.getAttribute('data-copytext');
-            dummy.select();
-            document.execCommand("copy");
-            document.body.removeChild(dummy);
-        }
-        </script>
-        """
-            )
+        """.format(
+            copytext
         )
