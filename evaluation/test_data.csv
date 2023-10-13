@@ -1,30 +1,29 @@
-read file;read a file to a pandas dataframe
-head;show the first 5 rows
-tail;show the last 5 rows
-columns;show the column names
-drop;drop unnecessary columns
-len;get the length of the dataframe
-query;show rows that meet a condition
-iloc;get a subset of the dataframe
-dtypes;show the types of the columns
-select dtypes;only show certain data types
-insert;insert a column in the specified position
-cumulative sum;calculate the cumulative sum
-sample;get a random sample of rows or columns
-where;query a dataset based on a condition
-unique;get unique values of a column
-nunique;get the number of unique values of a column
-rank;get the rank of the rows based on a clomun
-isin;get rows that contain values from a list
-replace;replace one value by another everywhere
-rename;rename a column
-fillna;fill up null values
-groupby;group data
-percentage change;get the percentage change from the previous value
-count;count how many entries are in each column
-value counts;how often does each value occur for a column
-crosstabs;give the frequency of how often one value in one column corresponds to one value in another
-cut;bin the data into 5 bins
-describe;give basic info about a column
-nlargest nsmallest;get the 5 largest values
-explode;change a list of data into unique entries
+read file;read a file to a pandas dataframe;
+head;show the first or last 5 rows;head,tail
+columns;show the column names;columns
+drop;drop unnecessary columns;drop
+len;get the length of the dataframe;len
+query;show rows that meet a condition;
+iloc;get a subset of the dataframe;iloc
+dtypes;show the types of the columns;dtypes
+select dtypes;only show certain data types;
+insert;insert a column in the specified position;insert
+cumulative sum;calculate the cumulative sum;cumsum
+sample;get a random sample of rows or columns;sample
+where;query a dataset based on a condition;where
+unique;get unique values of a column;unique
+nunique;get the number of unique values of a column;nunique
+rank;get the rank of the rows based on a clomun;rank
+isin;get rows that contain values from a list;isin
+replace;replace one value by another everywhere;replace
+rename;rename a column;rename
+fillna;fill up null values;fillna
+groupby;group data;groupby
+percentage change;get the percentage change from the previous value;pct_change
+count;count how many entries are in each column;count
+value counts;how often does each value occur for a column;value_counts
+crosstabs;give the frequency of how often one value in one column corresponds to one value in another;
+cut;bin the data into 5 bins;
+describe;give basic info about a column;describe
+nlargest nsmallest;get the 5 largest values;nlargest,nsmallest
+explode;change a list of data into unique entries;explode
