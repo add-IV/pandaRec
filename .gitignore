@@ -2,7 +2,7 @@
 examples/api_key.txt
 
 # stackoverflow data
-data_loading/posts
+stackoverflow_data/posts
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
