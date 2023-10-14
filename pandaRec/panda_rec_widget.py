@@ -1,11 +1,26 @@
 import ipywidgets as widgets
-from IPython.display import clear_output
 import ipydatagrid
 from .recommender import Recommender
 from .recipe import *
 from .copybutton import copy_button_html
-import os
-import traitlets as T
+from threading import Timer
+
+
+def debounced(wait, fn):
+    timer = None
+
+    def decorated(*args, **kwargs):
+        nonlocal timer
+
+        def call_it():
+            fn(*args, **kwargs)
+
+        if timer is not None:
+            timer.cancel()
+        timer = Timer(wait, call_it)
+        timer.start()
+
+    return decorated
 
 
 class ResultWidget(widgets.GridBox):
@@ -72,11 +87,15 @@ class ResultWidget(widgets.GridBox):
 
 
 class PandaRecWidget(widgets.VBox):
-    def __init__(self, recommender: Recommender, num_results=8, **kwargs) -> None:
+    def __init__(
+        self, recommender: Recommender, num_results=8, debounce=False, **kwargs
+    ) -> None:
         super().__init__()
 
         self.recommender = recommender
         self.df = self.recommender.context.data
+        if debounce:
+            self.update_recommendations = debounced(0.5, self.update_recommendations)
 
         print(kwargs)
         datagrid_layout = kwargs.pop("datagrid_layout", {})
