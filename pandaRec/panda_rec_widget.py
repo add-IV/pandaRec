@@ -3,7 +3,7 @@ from IPython.display import clear_output
 import ipydatagrid
 from .recommender import Recommender
 from .recipe import *
-from .copybutton import copybutton
+from .copybutton import copy_button_html
 import os
 import traitlets as T
 
@@ -11,7 +11,7 @@ import traitlets as T
 class ResultWidget(widgets.GridBox):
     num_results = 20
     copy_prefix = "widget.df."
-    copy_suffix = "\nwidget.update_data()"
+    copy_suffix = "\\nwidget.update_data()"
 
     def __init__(self, num_results) -> None:
         super().__init__()
@@ -31,7 +31,7 @@ class ResultWidget(widgets.GridBox):
                     "name": widgets.Label(),
                     "score": widgets.Label(),
                     "code": widgets.Label(),
-                    "copy": copybutton(""),
+                    "copy": widgets.HTML(copy_button_html(), button_style="primary"),
                     "description": widgets.Textarea(
                         layout=widgets.Layout(width="100%")
                     ),
@@ -56,7 +56,7 @@ class ResultWidget(widgets.GridBox):
                 self.recipes[idx]["name"].value = recipeResult.recipe.name
                 self.recipes[idx]["score"].value = f"{recipeResult.score:.2f}"
                 self.recipes[idx]["code"].value = recipeResult.recipe.code
-                self.recipes[idx]["copy"].set_copytext(
+                self.recipes[idx]["copy"].value = copy_button_html(
                     self.modify_copytext(recipeResult.recipe.code)
                 )
                 self.recipes[idx]["description"].value = recipeResult.recipe.description
@@ -64,7 +64,7 @@ class ResultWidget(widgets.GridBox):
                 self.recipes[idx]["name"].value = "Recipe not found"
                 self.recipes[idx]["score"].value = ""
                 self.recipes[idx]["code"].value = ""
-                self.recipes[idx]["copy"].set_copytext("")
+                self.recipes[idx]["copy"].value = copy_button_html()
                 self.recipes[idx]["description"].value = ""
 
     def modify_copytext(self, copytext):
@@ -72,9 +72,7 @@ class ResultWidget(widgets.GridBox):
 
 
 class PandaRecWidget(widgets.VBox):
-    def __init__(
-        self, recommender: Recommender, num_results=8, html=False, **kwargs
-    ) -> None:
+    def __init__(self, recommender: Recommender, num_results=8, **kwargs) -> None:
         super().__init__()
 
         self.recommender = recommender
@@ -89,9 +87,7 @@ class PandaRecWidget(widgets.VBox):
             layout=widgets.Layout(**datagrid_layout),
         )
 
-        self.search_box = widgets.Text(
-            placeholder="Search term", description="Search:"
-        )
+        self.search_box = widgets.Text(placeholder="Search term", description="Search:")
 
         self.result_widget = ResultWidget(num_results)
 
