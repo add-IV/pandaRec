@@ -1,0 +1,10 @@
+ipykernel
+ipywidgets
+ipydatagrid
+pandas
+openai
+sentence_transformers
+rapidfuzz
+# missing in openai
+matplotlib
+plotly
