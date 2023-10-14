@@ -1,7 +1,3 @@
-import ipywidgets as widgets
-
-widgets.Button
-
 def copy_button_html(copytext=""):
     return """
 <style>
