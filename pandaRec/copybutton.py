@@ -1,5 +1,4 @@
 import ipywidgets as widgets
-from IPython.display import HTML
 
 widgets.Button
 
