@@ -1,4 +1,4 @@
-from pandaRec.search_index import (
+from pandarec.search_index import (
     lemmatize_no_stop_words,
     generate_search_index,
     save_search_index,

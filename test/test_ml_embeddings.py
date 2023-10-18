@@ -1,4 +1,4 @@
-from pandaRec.ml_embeddings import save_embeddings, load_embeddings
+from pandarec.ml_embeddings import save_embeddings, load_embeddings
 
 
 def test_save_load_embeddings(tmp_path):

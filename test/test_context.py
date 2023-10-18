@@ -1,4 +1,4 @@
-from pandaRec.context import Context, Selection
+from pandarec.context import Context, Selection
 import pandas as pd
 from pandas.testing import assert_frame_equal
 

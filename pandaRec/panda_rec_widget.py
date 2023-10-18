@@ -2,7 +2,6 @@ import ipywidgets as widgets
 import ipydatagrid
 from .recommender import Recommender
 from .recipe import RecipeResult
-from .copy_button import copy_button_html
 from threading import Timer
 
 
@@ -21,6 +20,19 @@ def debounced(wait, fn):
         timer.start()
 
     return decorated
+
+
+def copy_button_html(copy_text=""):
+    return f"""
+<style>
+    .copy_button:active {{
+        background-color: var(--jp-success-color1);
+    }}
+</style>
+<button class="copy_button" onclick=navigator.clipboard.writeText('{copy_text}') icon="copy">
+    Copy
+</button>
+"""
 
 
 class ResultWidget(widgets.GridBox):
@@ -138,17 +150,18 @@ class PandaRecWidget(widgets.VBox):
             ]
         )
 
-        self.search_box.observe(self.update_recommendations, names="value")  # type: ignore
-        self.data_grid.observe(self.update_recommendations, names="selected_cells")  # type: ignore
+        self.search_box.observe(self.update_recommendations, names="value")
+        self.data_grid.observe(self.update_recommendations, names="selected_cells")
 
-        self.options.children[1].observe(self.set_copy_prefix, names="value")  # type: ignore
-        self.options.children[3].observe(self.set_copy_suffix, names="value")  # type: ignore
-        self.options.children[5].observe(self.set_num_results, names="value")  # type: ignore
+        self.options.observe(self.set_copy_prefix, names="children.1.value")
+        self.options.observe(self.set_copy_suffix, names="children.3.value")
+        self.options.observe(self.set_num_results, names="children.5.value")
 
         self.extend_options = widgets.Accordion([self.options])
         self.extend_options.set_title(0, "Options")
 
         self._set_children()
+
 
     def set_copy_prefix(self, _change):
         self.result_widget.copy_prefix = self.options.children[1].value  # type: ignore

@@ -1,4 +1,4 @@
-from pandaRec.recipe import (
+from pandarec.recipe import (
     Recipe,
     RecipeResult,
     Embedding,

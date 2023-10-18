@@ -1,16 +1,21 @@
-from pandaRec.panda_rec_widget import (
+from pandarec.panda_rec_widget import (
     debounced,
     ResultWidget,
     PandaRecWidget,
+    copy_button_html
 )
-from pandaRec import Recommender, strategies
-from pandaRec.recipe import RecipeResult, Recipe
-from pandaRec.copy_button import copy_button_html
+from pandarec import Recommender, strategies
+from pandarec.recipe import RecipeResult, Recipe
 import time
 import ipywidgets as widgets
 from pandas import DataFrame
 from pandas.testing import assert_frame_equal
 
+
+def test_copy_button_html():
+    copy_button = copy_button_html("test")
+    assert "<button class=\"copy_button\"" in copy_button
+    assert "onclick=navigator.clipboard.writeText('{}')".format("test") in copy_button
 
 class TestDebounced:
     value = 0
@@ -45,10 +50,10 @@ class TestResultWidget:
         )
 
     def test_change_num_results(self):
-        self.result_widget._change_num_results(20)
+        self.result_widget.change_num_results(20)
         assert self.result_widget.num_results == 20
         assert len(self.result_widget.recipes) == 20
-        self.result_widget._change_num_results(self.num_results)
+        self.result_widget.change_num_results(self.num_results)
 
     def test_update(self):
         recipe = Recipe(1, "name", "description", "code", "keywords")

@@ -1,20 +1,20 @@
-from pandaRec.recommender import Recommender
-from pandaRec.recipe import Recipe, RecipeResult
-from pandaRec.strategies import NameSearch
-from pandaRec.context import Selection
+from pandarec.recommender import Recommender
+from pandarec.recipe import Recipe, RecipeResult
+from pandarec.strategies import NameSearch
+from pandarec.context import Selection
 import pandas as pd
 from pandas.testing import assert_frame_equal
 import yaml
 
 recipesStr = """
-- !!python/object:pandaRec.recipe.Recipe
+- !!python/object:pandarec.recipe.Recipe
   id: 1
   name: filter
   description: "Subset rows or columns of dataframe according to labels in the specified\
     index.\n\nNote that this routine does not filter a dataframe on its contents.\n\"
   code: ''
   keywords: ''
-- !!python/object:pandaRec.recipe.Recipe
+- !!python/object:pandarec.recipe.Recipe
   id: 2
   name: backfill
   description: "Synonym for :meth:`DataFrame.fillna` with ``method='bfill'``.\n\n\
@@ -22,7 +22,7 @@ recipesStr = """
     or None if ``inplace=True``."
   code: ''
   keywords: ''
-- !!python/object:pandaRec.recipe.Recipe
+- !!python/object:pandarec.recipe.Recipe
   id: 3
   name: fillna
   description: "Fill NA/NaN values using the specified method."
