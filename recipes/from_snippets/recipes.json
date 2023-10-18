@@ -1,0 +1,387 @@
+[
+    {
+        "id": 0,
+        "name": "Pandas Import",
+        "description": "Import Pandas.",
+        "code": "import pandas as pd",
+        "keywords": ""
+    },
+    {
+        "id": 1,
+        "name": "Read CSV",
+        "description": "Read CSV File.",
+        "code": "df = pd.read_csv(\"${1:sample.csv}\")",
+        "keywords": ""
+    },
+    {
+        "id": 2,
+        "name": "Read CSV Skiprows",
+        "description": "Read CSV File with Row Skipping.",
+        "code": "df = pd.read_csv(\"${1:sample.csv}\", skiprows=lambda x: x % 2 != 0)",
+        "keywords": ""
+    },
+    {
+        "id": 3,
+        "name": "Get Stats",
+        "description": "Show aggregate stats for columns.",
+        "code": "#df is your dataframe\ndf[[\"${1:Column1}\", \"${2:Column2}\"]].describe()",
+        "keywords": ""
+    },
+    {
+        "id": 4,
+        "name": "Get Stats Specific",
+        "description": "Show custom aggregate stats for columns.",
+        "code": "#df is your dataframe\ndf.agg(\n\t{\n\t\t\"${1:Column1}\": [\"min\", \"max\", \"median\", \"skew\"],\n\t\t\"${1:Column2}\": [\"min\", \"max\", \"median\", \"mean\"],\n\t}\n)",
+        "keywords": ""
+    },
+    {
+        "id": 5,
+        "name": "Get Shape",
+        "description": "Fetches the shape of your dataframe.",
+        "code": "#df is your dataframe\ndf.shape",
+        "keywords": ""
+    },
+    {
+        "id": 6,
+        "name": "Get Row Count",
+        "description": "Fetches the count of rows of your dataframe.",
+        "code": "#df is your dataframe\nrows_count = df.shape[0]",
+        "keywords": ""
+    },
+    {
+        "id": 7,
+        "name": "Get Columns Count",
+        "description": "Fetches the count of columns of your dataframe.",
+        "code": "#df is your dataframe\ncol_count = df.shape[1]",
+        "keywords": ""
+    },
+    {
+        "id": 8,
+        "name": "First X Rows",
+        "description": "First X Rows.",
+        "code": "#df is your dataframe\nfirst_x_rows = df[0:${1:5}]\nprint(first_x_rows)",
+        "keywords": ""
+    },
+    {
+        "id": 9,
+        "name": "Last X Rows",
+        "description": "Last X Rows.",
+        "code": "#df is your dataframe\nlast_x_rows = df.tail(${1:10})\nprint(last_x_rows)",
+        "keywords": ""
+    },
+    {
+        "id": 10,
+        "name": "Replace Values",
+        "description": "Replace values in a dataframe.",
+        "code": "#df is your dataframe\ndf.replace(${1:OldValue},${2:NewVal})",
+        "keywords": ""
+    },
+    {
+        "id": 11,
+        "name": "N Largest Values",
+        "description": "Select the N largest values from a column in a dataframe.",
+        "code": "#df is your dataframe\ndf.nlargest(${1:NumOfValues},'${2:ColumnName}')",
+        "keywords": ""
+    },
+    {
+        "id": 12,
+        "name": "N Smallest Values",
+        "description": "Select the N smallest values from a column in a dataframe.",
+        "code": "#df is your dataframe\ndf.nsmallest(${1:NumOfValues},'${2:ColumnName}')",
+        "keywords": ""
+    },
+    {
+        "id": 13,
+        "name": "Define Categories",
+        "description": "Define categories with Pandas.",
+        "code": "#pd is your Pandas import alias (import pandas as pd)\ncategories = pd.Series([1,2,3], dtype=\"category\")",
+        "keywords": ""
+    },
+    {
+        "id": 14,
+        "name": "Frequency Distribution",
+        "description": "Get frequency distribution of values for a column.",
+        "code": "#df is your dataframe\ndf.${1:ColumnName}.value_counts(ascending = True)",
+        "keywords": ""
+    },
+    {
+        "id": 15,
+        "name": "Sample Data",
+        "description": "Get a sample of data from your dataframe.",
+        "code": "#df is your dataframe\n#frac is percentage of data to sample\n#0.2 is 20 percent\ndf.sample(frac = 0.2)",
+        "keywords": ""
+    },
+    {
+        "id": 16,
+        "name": "Select Column",
+        "description": "Select a specific column from dataframe.",
+        "code": "#df is your dataframe\ncolumn = df[\"${1:ColumnName}\"]",
+        "keywords": ""
+    },
+    {
+        "id": 17,
+        "name": "Select Columns",
+        "description": "Select multiple columns from dataframe.",
+        "code": "#df is your dataframe\ndf[[\"${1:FirstColumnName}\",\"${2:SecondColumnName}\"]]",
+        "keywords": ""
+    },
+    {
+        "id": 18,
+        "name": "Select Rows Specific Columns",
+        "description": "Select rows by indices for specific columns in dataframe.",
+        "code": "#df is your dataframe\n#0 is index of start row number, 5 is index of end row number,\ndf.loc[0:5,[\"\",\"${2:SecondColumnName}\"]]",
+        "keywords": ""
+    },
+    {
+        "id": 19,
+        "name": "Rows By Index",
+        "description": "Select rows by indices.",
+        "code": "#df is your dataframe\n#0 is index of start row number, 10 is index of end row number,\ndf.iloc[${1:0}:${2:10},:]",
+        "keywords": ""
+    },
+    {
+        "id": 20,
+        "name": "Columns By Index",
+        "description": "Select columns by indices.",
+        "code": "#df is your dataframe\n#0 is index of start column number, 5 is index of end column number,\ndf.iloc[:,${1:0}:${2:5}]",
+        "keywords": ""
+    },
+    {
+        "id": 21,
+        "name": "Create Custom Dataframe",
+        "description": "Create custom dataframe.",
+        "code": "df = pd.DataFrame({\"Player\" : [\"Sach\",\"KingK\",\"Zak\"], \"Role\" : [\"Master Batter\",\"Run Machine\",\"Speed Machine\"]})",
+        "keywords": ""
+    },
+    {
+        "id": 22,
+        "name": "Column Rename",
+        "description": "Assign new column names to dataframe.",
+        "code": "#df is your dataframe\ndf.columns = ['${1:NewColumnName}','${2:SecondNewColumnName}']",
+        "keywords": ""
+    },
+    {
+        "id": 23,
+        "name": "Column Rename Specific",
+        "description": "Rename specific columns in dataframe.",
+        "code": "#df is your dataframe\ndf.rename(columns = {\"${1:OldColumnName}\":\"${2:NewColumnName}\"},inplace = False)",
+        "keywords": ""
+    },
+    {
+        "id": 24,
+        "name": "Drop Column",
+        "description": "Drop columns by name.",
+        "code": "#df is your dataframe\ndf.drop(columns=['${1:ColumnNameOne}','${1:ColumnNameTwo}'])",
+        "keywords": ""
+    },
+    {
+        "id": 25,
+        "name": "Sort By Column",
+        "description": "Sort values by column.",
+        "code": "#df is your dataframe\n#set inplace = True as needed\ndf.sort_values(\"${1:ColumnNameOne}\",ascending = True, inplace = False)",
+        "keywords": ""
+    },
+    {
+        "id": 26,
+        "name": "Filter Dataframe",
+        "description": "Filter dataframe based on condition/match.",
+        "code": "#df is your dataframe\ndf[df.${1:ColumnName} == \"${2:SomeValue}\"]",
+        "keywords": ""
+    },
+    {
+        "id": 27,
+        "name": "Apply Function to All",
+        "description": "Apply function to all elements in the dataframe.",
+        "code": "def ${1}(x):\n   return x*x\n\n#df is your dataframe\n#example function is applicable for all INT dataframe \ndf_squared = df.apply(${1:yourFunction})",
+        "keywords": ""
+    },
+    {
+        "id": 28,
+        "name": "Apply Function Single Column",
+        "description": "Apply function to single column.",
+        "code": "def ${2}(x):\n   return x*x\n\n#df is your dataframe\ndf[\"${1:ColumnName}\"] = df[\"${1}\"].apply(${2:yourFunction})",
+        "keywords": ""
+    },
+    {
+        "id": 29,
+        "name": "Apply Function Multiple Columns",
+        "description": "Apply function to multiple columns.",
+        "code": "def ${3}(x):\n   return x*x\n\n#df is your dataframe\ndf[[\"${1:ColumnOne}\",\"${2:ColumnTwo}\"]] = df[[\"${1}\",\"${2}\"]].apply(${3:yourFunction})",
+        "keywords": ""
+    },
+    {
+        "id": 30,
+        "name": "Apply Column Lambda",
+        "description": "Apply inline function/lambda to a column.",
+        "code": "#df is your dataframe\ndf[\"${1:ColumnOne}\"] = df[\"${1}\"].apply(lambda x: x*x)",
+        "keywords": ""
+    },
+    {
+        "id": 31,
+        "name": "Convert All Numeric",
+        "description": "Convert all columns to Numeric type.",
+        "code": "#df is your dataframe\n#pd is pandas import\ndf = df.apply(pd.to_numeric)",
+        "keywords": ""
+    },
+    {
+        "id": 32,
+        "name": "Convert Column to Numeric",
+        "description": "Convert a column to numeric type.",
+        "code": "#df is your dataframe\n#pd is pandas import\ndf[\"${1:ColumnOne}\"] = pd.to_numeric(df[\"${1:ColumnOne}\"])",
+        "keywords": ""
+    },
+    {
+        "id": 33,
+        "name": "Convert Columns to Numeric",
+        "description": "Convert multiple columns to numeric type.",
+        "code": "#df is your dataframe\n#pd is pandas import\ndf[[\"${1:ColumnOne}\", \"${2:ColumnTwo}\"]] = df[[\"${1}\", \"${2}\"]].apply(pd.to_numeric)",
+        "keywords": ""
+    },
+    {
+        "id": 34,
+        "name": "Set Column Types",
+        "description": "Assign data types to columns.",
+        "code": "#df is your dataframe\ndf = df.astype(\n\t{\n\t\t'${1:ColumnOne}': 'float', \n\t\t'${2:ColumnTwo}': 'int',\n\t\t'${3:ColumnThree}': 'datetime',\n\t\t'${4:ColumnFour}': 'string'\n\t}\n)",
+        "keywords": ""
+    },
+    {
+        "id": 35,
+        "name": "Column Fill Mean Value",
+        "description": "Fill mean value in place of missing values in dataframe column.",
+        "code": "#df is your dataframe\ndf['${1:ColumnName}'] = df['${1}'].fillna(df['${1}'].mean().round(1), inplace=False)",
+        "keywords": ""
+    },
+    {
+        "id": 36,
+        "name": "Column Fill Median Value",
+        "description": "Fill median value in place of missing values in dataframe column.",
+        "code": "#df is your dataframe\ndf['${1:ColumnName}'] = df['${1}'].fillna(df['${1}'].median().round(1), inplace=False)",
+        "keywords": ""
+    },
+    {
+        "id": 37,
+        "name": "Column Fill Modal Value",
+        "description": "Fill modal value in place of missing values in dataframe column.",
+        "code": "#df is your dataframe\ndf['${1:ColumnName}'] = df['${1}'].fillna(df['${1}'].mode()[0], inplace=False)",
+        "keywords": ""
+    },
+    {
+        "id": 38,
+        "name": "Write To Excel",
+        "description": "Output your dataframe to an Excel file and specific sheet.",
+        "code": "#requires openpyxl package\n#df is your dataframe\ndf.to_excel(\"${1:output.xlsx}\", sheet_name='${2:SheetName}', index=False)",
+        "keywords": ""
+    },
+    {
+        "id": 39,
+        "name": "Write To CSV",
+        "description": "Output your dataframe to a CSV file.",
+        "code": "#df is your dataframe\ndf.to_csv(\"${1:output.csv}\", sep=',', encoding='utf-8', index=False)",
+        "keywords": ""
+    },
+    {
+        "id": 40,
+        "name": "Concatenate Dataframe",
+        "description": "Concatenate dataframes.",
+        "code": "#df1, df2, df3 are dataframes\nframes = [df1, df2, df3]\nresult = pd.concat(frames)",
+        "keywords": ""
+    },
+    {
+        "id": 41,
+        "name": "Read CSV Chunked",
+        "description": "Read CSV file in chunks.",
+        "code": "#set chunksize to number of rows\ndf = pd.read_csv(\"${1:sample}.csv\", chunksize=${2:10)",
+        "keywords": ""
+    },
+    {
+        "id": 42,
+        "name": "Scatter Plot",
+        "description": "Make a scatter plot.",
+        "code": "#Ensure you have matplotlib installed.\nimport matplotlib.pyplot as plt\nimport pandas as pd\n\ndf.plot(kind='scatter',x='${1:ColumnOne}',y='${2:ColumnTwo}',color='red')\nplt.show()",
+        "keywords": ""
+    },
+    {
+        "id": 43,
+        "name": "Bar Plot",
+        "description": "Make a bar plot.",
+        "code": "#Ensure you have matplotlib installed.\n#df is your dataframe\ndf.plot(kind='bar',x='${1:ColumnOne}',y='${2:ColumnTwo}')",
+        "keywords": ""
+    },
+    {
+        "id": 44,
+        "name": "Line Plot Multiple",
+        "description": "Make a line plot with multiple columns.",
+        "code": "#Ensure you have matplotlib installed.\nimport matplotlib.pyplot as plt\nimport pandas as pd\n\nax = plt.gca()\ndf.plot(kind='line',x='${1:ColumnOne}',y='${2:ColumnTwo}', color='blue',ax=ax)\ndf.plot(kind='line',x='${1:ColumnOne}',y='${3:ColumnThree}', color='red', ax=ax)\nplt.show()",
+        "keywords": ""
+    },
+    {
+        "id": 45,
+        "name": "Save plot to file",
+        "description": "Save plot to output file.",
+        "code": "#Ensure you have matplotlib installed.\n#Here plt is your matplotlib.pyplot import\nplt.savefig('${1:OutputFile}.png')",
+        "keywords": ""
+    },
+    {
+        "id": 46,
+        "name": "Create Pivot Table",
+        "description": "Create a Pivot Table.",
+        "code": "#df is your dataframe\nnewDf = pd.pivot_table(df, values='${1:ColumnOne}',columns='${2:ColumnTwo}')",
+        "keywords": ""
+    },
+    {
+        "id": 47,
+        "name": "Group By with Count",
+        "description": "Group By with Count Aggregate.",
+        "code": "#df is your dataframe\n#ColumnOne is the selected/displayed column.\n#ColumnTwo is the aggregated column.\nnewDf = df.groupby(\"${1:ColumnOne}\")[\"${2:ColumnTwo}\"].count()",
+        "keywords": ""
+    },
+    {
+        "id": 48,
+        "name": "Group By with Mean",
+        "description": "Group By with Mean Aggregate.",
+        "code": "#df is your dataframe\n#ColumnOne is the selected/displayed column.\n#ColumnTwo is the aggregated column.\nnewDf = df.groupby(\"${1:ColumnOne}\")[\"${2:ColumnTwo}\"].mean()",
+        "keywords": ""
+    },
+    {
+        "id": 49,
+        "name": "Expanding Window Mean",
+        "description": "Expanding Window mean.",
+        "code": "#df is your dataframe\ndf['expandedMean']=df['${1:ColumnName}'].expanding().mean()",
+        "keywords": ""
+    },
+    {
+        "id": 50,
+        "name": "Rolling Window Mean",
+        "description": "Rolling Window mean.",
+        "code": "#df is your dataframe\n#rolling(2) means 2 previous rows\ndf['rollingMean']=df['${1:ColumnName}'].rolling(${2:2}).mean()",
+        "keywords": ""
+    },
+    {
+        "id": 51,
+        "name": "Filter Dataframe By Query",
+        "description": "Filter dataframe by query based on condition/match.",
+        "code": "#df is your dataframe\nresult = df.loc[df.query('${1:ColumnOne} < 10 & ${2:ColumnTwo} == 20').index]",
+        "keywords": ""
+    },
+    {
+        "id": 52,
+        "name": "Bar Plot horizontal",
+        "description": "Make a horizontal bar plot.",
+        "code": "#df is your dataframe\ndf.plot.barh(stacked=True, x='${1:ColumnOne}', y='${2:ColumnTwo}')",
+        "keywords": ""
+    },
+    {
+        "id": 53,
+        "name": "Histogram",
+        "description": "Make a histogram.",
+        "code": "#df is your dataframe\ndf.plot.hist(column='${1:ColumnName}',bins='${2:10}')",
+        "keywords": ""
+    },
+    {
+        "id": 54,
+        "name": "Column Histogram",
+        "description": "Make a histogram for each column.",
+        "code": "#df is your dataframe\n#drop any non-numeric columns if needed\ndf.diff().hist()",
+        "keywords": ""
+    }
+]
