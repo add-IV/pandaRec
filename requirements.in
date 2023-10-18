@@ -7,3 +7,5 @@ rapidfuzz
 # missing in openai
 matplotlib
 plotly
+websockets
+nest_asyncio

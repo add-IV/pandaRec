@@ -102,6 +102,8 @@ multidict==6.0.4
     # via
     #   aiohttp
     #   yarl
+nest-asyncio==1.5.8
+    # via -r .\requirements.in
 networkx==3.1
     # via torch
 nltk==3.8.1
@@ -233,6 +235,8 @@ urllib3==2.0.6
     # via requests
 wcwidth==0.2.8
     # via prompt-toolkit
+websockets==11.0.3
+    # via -r .\requirements.in
 widgetsnbextension==4.0.9
     # via ipywidgets
 yarl==1.9.2
