@@ -1,8 +1,8 @@
 import ipywidgets as widgets
 import ipydatagrid
 from .recommender import Recommender
-from .recipe import *
-from .copybutton import copy_button_html
+from .recipe import RecipeResult
+from .copy_button import copy_button_html
 from threading import Timer
 
 
@@ -33,10 +33,10 @@ class ResultWidget(widgets.GridBox):
         self.layout = widgets.Layout(
             grid_template_columns="2fr 1fr 4fr 1fr 16fr", width="100%"
         )
-        self._change_num_results(num_results)
+        self.change_num_results(num_results)
         self.update([])
 
-    def _change_num_results(self, num_results):
+    def change_num_results(self, num_results):
         self.num_results = num_results
         self.recipes = []
         children = []
@@ -63,18 +63,20 @@ class ResultWidget(widgets.GridBox):
             )
         self.children = children
 
-    def update(self, recipeResults: list[RecipeResult]):
-        for idx, recipeResult in enumerate(recipeResults):
+    def update(self, recipe_results: list[RecipeResult]):
+        for idx, recipe_result in enumerate(recipe_results):
             if idx >= self.num_results:
                 break
-            if recipeResult.recipe is not None:
-                self.recipes[idx]["name"].value = recipeResult.recipe.name
-                self.recipes[idx]["score"].value = f"{recipeResult.score:.2f}"
-                self.recipes[idx]["code"].value = recipeResult.recipe.code
+            if recipe_result.recipe is not None:
+                self.recipes[idx]["name"].value = recipe_result.recipe.name
+                self.recipes[idx]["score"].value = f"{recipe_result.score:.2f}"
+                self.recipes[idx]["code"].value = recipe_result.recipe.code
                 self.recipes[idx]["copy"].value = copy_button_html(
-                    self.modify_copytext(recipeResult.recipe.code)
+                    self.modify_copy_text(recipe_result.recipe.code)
                 )
-                self.recipes[idx]["description"].value = recipeResult.recipe.description
+                self.recipes[idx][
+                    "description"
+                ].value = recipe_result.recipe.description
             else:
                 self.recipes[idx]["name"].value = "Recipe not found"
                 self.recipes[idx]["score"].value = ""
@@ -82,8 +84,8 @@ class ResultWidget(widgets.GridBox):
                 self.recipes[idx]["copy"].value = copy_button_html()
                 self.recipes[idx]["description"].value = ""
 
-    def modify_copytext(self, copytext):
-        return self.copy_prefix + copytext + self.copy_suffix
+    def modify_copy_text(self, copy_text):
+        return self.copy_prefix + copy_text + self.copy_suffix
 
 
 class PandaRecWidget(widgets.VBox):
@@ -95,7 +97,11 @@ class PandaRecWidget(widgets.VBox):
         self.recommender = recommender
         self.df = self.recommender.context.data
         if debounce:
-            self.update_recommendations = debounced(0.5, self.update_recommendations)
+            self.update_recommendations = debounced(
+                0.5, self._base_update_recommendations
+            )
+        else:
+            self.update_recommendations = self._base_update_recommendations
 
         print(kwargs)
         datagrid_layout = kwargs.pop("datagrid_layout", {})
@@ -144,14 +150,14 @@ class PandaRecWidget(widgets.VBox):
 
         self._set_children()
 
-    def set_copy_prefix(self, change):
+    def set_copy_prefix(self, _change):
         self.result_widget.copy_prefix = self.options.children[1].value  # type: ignore
 
-    def set_copy_suffix(self, change):
+    def set_copy_suffix(self, _change):
         self.result_widget.copy_suffix = self.options.children[3].value  # type: ignore
 
     def set_num_results(self, change):
-        self.result_widget._change_num_results(self.options.children[5].value)  # type: ignore
+        self.result_widget.change_num_results(self.options.children[5].value)  # type: ignore
         self._set_children()
         self.update_recommendations(change)
 
@@ -163,7 +169,7 @@ class PandaRecWidget(widgets.VBox):
             self.result_widget,
         ]
 
-    def update_recommendations(self, _change):
+    def _base_update_recommendations(self, _change):
         self.recommender.set_search(str(self.search_box.value))
         self.recommender.set_selection(self.data_grid.selected_cells)
         self.recommender.recommend()

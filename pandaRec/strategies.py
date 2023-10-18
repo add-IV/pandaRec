@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod  # type: ignore
 from .context import Context
-from .recipe import *
+from .recipe import Recipe, RecipeResult, get_recipe_by_name
 from rapidfuzz import fuzz, process
 from rapidfuzz.utils import default_process
 from sentence_transformers import SentenceTransformer, util

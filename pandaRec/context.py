@@ -10,6 +10,7 @@ class Selection:
     c2: int
 
 
+@dataclass
 class Context:
     """
     A class representing a context for a search query.
@@ -23,14 +24,10 @@ class Context:
     query : str
         The search query being used.
     """
+
     selections: list[Selection]
     data: DataFrame
     query: str
-
-    def __init__(self, selections: list[Selection], data: DataFrame, search: str):
-        self.selections = selections
-        self.data = data
-        self.query = search
 
     def is_whole_row(self, selection: Selection) -> bool:
         # Returns True if the given Selection object represents an entire row in the DataFrame.

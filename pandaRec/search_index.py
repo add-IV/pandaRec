@@ -6,18 +6,9 @@ import pickle
 
 
 def lemmatize_no_stop_words(text: str) -> list[str]:
-    try:
-        nltk.data.find("corpora/wordnet")
-    except LookupError:
-        nltk.download("wordnet")
-    try:
-        nltk.data.find("corpora/omw-1.4")
-    except LookupError:
-        nltk.download("omw-1.4")
-    try:
-        nltk.data.find("corpora/stopwords")
-    except LookupError:
-        nltk.download("stopwords")
+    nltk.download("wordnet", quiet=True)
+    nltk.download("omw-1.4", quiet=True)
+    nltk.download("stopwords", quiet=True)
     wnl = WordNetLemmatizer()
     words = re.findall(r"\w*[a-zA-Z]\w*", text)
     return [
@@ -33,7 +24,7 @@ def generate_search_index(descriptions: list[str]) -> dict[str, list[tuple[int, 
     lemmatized_descriptions = [
         lemmatize_no_stop_words(description) for description in descriptions
     ]
-    # 2. build the forward index, one list of (word, frequenzy) tuples per description
+    # 2. build the forward index, one list of (word, frequency) tuples per description
     frequency_per_description = [
         [(word, description.count(word)) for word in set(description)]
         for description in lemmatized_descriptions
