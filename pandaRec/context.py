@@ -1,7 +1,7 @@
 """Context classes for the pandas recommender.
 
-This module contains the Context class,
-which is used to represent the context of a search query."""
+This module contains the Context class, which is used to represent the
+context of a search query and related classes."""
 
 from dataclasses import dataclass  # type: ignore
 from pandas import DataFrame
@@ -12,10 +12,10 @@ class Selection:
     """A class representing a rectangular selection of cells in a DataFrame.
 
     Attributes:
-        r1 (int): The index of the first row in the selection.
-        c1 (int): The index of the first column in the selection.
-        r2 (int): The index of the last row in the selection.
-        c2 (int): The index of the last column in the selection."""
+        r1: The index of the first row in the selection.
+        c1: The index of the first column in the selection.
+        r2: The index of the last row in the selection.
+        c2: The index of the last column in the selection."""
 
     r1: int
     c1: int
@@ -26,14 +26,7 @@ class Selection:
 @dataclass
 class Context:
     """
-    A class representing a context for a search query.
-
-    Attributes:
-        selections (list[Selection]):
-            A list of Selection objects representing the selected cells in the DataFrame.
-        data (DataFrame): The DataFrame being searched.
-        query (str): The search query being used.
-    """
+    A class representing a context for a search query."""
 
     selections: list[Selection]
     data: DataFrame

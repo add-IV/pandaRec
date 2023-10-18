@@ -60,7 +60,7 @@ class TestGetByIdOrName:
 def test_createEmbedding():
     embedding = Embedding("name", "algorithm", "path", "model")
     assert embedding.name == "name"
-    assert embedding.algorithm == "algorithm"
+    assert embedding.strategie == "algorithm"
     assert embedding.path == "path"
     assert embedding.model == "model"
     assert (

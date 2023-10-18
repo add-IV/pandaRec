@@ -4,6 +4,11 @@ examples/api_key.txt
 # stackoverflow data
 stackoverflow_data/posts
 
+# sphinx generated documentation
+docs/_build/
+docs/_static/
+docs/_templates/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

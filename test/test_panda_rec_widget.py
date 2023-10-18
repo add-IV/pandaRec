@@ -2,7 +2,7 @@ from pandarec.panda_rec_widget import (
     debounced,
     ResultWidget,
     PandaRecWidget,
-    copy_button_html
+    copy_button_html,
 )
 from pandarec import Recommender, strategies
 from pandarec.recipe import RecipeResult, Recipe
@@ -14,8 +14,9 @@ from pandas.testing import assert_frame_equal
 
 def test_copy_button_html():
     copy_button = copy_button_html("test")
-    assert "<button class=\"copy_button\"" in copy_button
+    assert '<button class="copy_button"' in copy_button
     assert "onclick=navigator.clipboard.writeText('{}')".format("test") in copy_button
+
 
 class TestDebounced:
     value = 0
@@ -63,7 +64,7 @@ class TestResultWidget:
         assert self.result_widget.recipes[0]["score"].value == "1.00"
         assert self.result_widget.recipes[0]["code"].value == "code"
         assert self.result_widget.recipes[0]["description"].value == "description"
-        copy_value = self.result_widget.modify_copy_text("code")
+        copy_value = self.result_widget._modify_copy_text("code")
         assert self.result_widget.recipes[0]["copy"].value == copy_button_html(
             copy_value
         )

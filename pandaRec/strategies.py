@@ -1,25 +1,30 @@
+"""This module contains the ranking strategies used to rank recipes based on a query."""
 from abc import ABC, abstractmethod  # type: ignore
-from .context import Context
-from .recipe import Recipe, RecipeResult, get_recipe_by_name
 from rapidfuzz import fuzz, process
 from rapidfuzz.utils import default_process
 from sentence_transformers import SentenceTransformer, util
+from openai.embeddings_utils import get_embedding, cosine_similarity, get_embeddings
 from .ml_embeddings import load_embeddings
 from .search_index import (
     generate_search_index,
     load_search_index,
     lemmatize_no_stop_words,
 )
-from openai.embeddings_utils import get_embedding, cosine_similarity, get_embeddings
+from .context import Context
+from .recipe import Recipe, RecipeResult, get_recipe_by_name
 
 
 class RankingStrategy(ABC):
+    """An abstract class representing a ranking strategy."""
+
     @abstractmethod
     def search(self, context: Context, recipes: list[Recipe]) -> list[RecipeResult]:
         pass
 
 
 class NameSearch(RankingStrategy):
+    """A simple proof-of-concept ranking strategy that only searches for the query in the recipe name."""
+
     @staticmethod
     def search(context: Context, recipes: list[Recipe]) -> list[RecipeResult]:
         result = []
@@ -30,6 +35,8 @@ class NameSearch(RankingStrategy):
 
 
 class FuzzySearchName(RankingStrategy):
+    """A fuzzy search ranking strategy that uses the name of the recipe."""
+
     @staticmethod
     def search(context: Context, recipes: list[Recipe]) -> list[RecipeResult]:
         names = [recipe.name for recipe in recipes]
@@ -42,6 +49,10 @@ class FuzzySearchName(RankingStrategy):
 
 
 class FuzzySearchDescription(RankingStrategy):
+    """A fuzzy search ranking strategy that uses the description of the recipe.
+    The fuzzy search ratio can be changed by passing a different ratio function to the constructor.
+    """
+
     def __init__(self, ratio=fuzz.partial_token_sort_ratio):
         super().__init__()
         self.ratio = ratio
@@ -58,6 +69,9 @@ class FuzzySearchDescription(RankingStrategy):
 
 
 class IndexSearch(RankingStrategy):
+    """A ranking strategy that uses a search index to search for recipes.
+    The search index can be generated on the fly or loaded from a file."""
+
     def __init__(self, recipes: list[Recipe], path: str = ""):
         super().__init__()
         if not path:
@@ -91,6 +105,9 @@ class IndexSearch(RankingStrategy):
 
 
 class SemanticSearch(RankingStrategy):
+    """A ranking strategy that uses semantic embeddings to search for recipes.
+    The embeddings can be generated on the fly or loaded from a file."""
+
     def __init__(
         self,
         recipes: list[Recipe],
@@ -116,6 +133,9 @@ class SemanticSearch(RankingStrategy):
 
 
 class OpenAIEmbeddings(RankingStrategy):
+    """A ranking strategy that uses OpenAI embeddings to search for recipes.
+    The embeddings can be generated on the fly or loaded from a file."""
+
     def __init__(
         self,
         recipes: list[Recipe],
