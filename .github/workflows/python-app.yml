@@ -33,7 +33,7 @@ jobs:
         python -m coverage run -m pytest
         coverage report > coverage.txt
     - name: upload coverage artifact
-    - uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v3
       with:
         name: coverage
         path: coverage.txt
