@@ -58,14 +58,13 @@ class TestGetByIdOrName:
 
 
 def test_createEmbedding():
-    embedding = Embedding("name", "algorithm", "path", "model")
-    assert embedding.name == "name"
-    assert embedding.strategie == "algorithm"
+    embedding = Embedding("path", "strategy", "model")
     assert embedding.path == "path"
+    assert embedding.strategy == "strategy"
     assert embedding.model == "model"
     assert (
         str(embedding)
-        == "Embedding(name='name', algorithm='algorithm', path='path', model='model')"
+        == "Embedding(path='path', strategy='strategy', model='model')"
     )
 
 

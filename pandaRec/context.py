@@ -33,9 +33,9 @@ class Context:
     query: str
 
     def is_whole_row(self, selection: Selection) -> bool:
-        """Returns True if the given Selection represents an entire row in the DataFrame."""
+        """Returns True if the given Selection represents an entire row of the DataFrame."""
         return selection.c1 == 0 and selection.c2 == self.data.shape[1]
 
     def is_whole_column(self, selection: Selection) -> bool:
-        """Returns True if the given Selection represents an entire column in the DataFrame."""
+        """Returns True if the given Selection represents an entire column of the DataFrame."""
         return selection.r1 == 0 and selection.r2 == self.data.shape[0]

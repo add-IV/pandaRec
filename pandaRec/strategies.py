@@ -36,8 +36,8 @@ class NameSearch(RankingStrategy):
     searches for the query in the recipe name."""
 
     @staticmethod
-    def search(  # pylint: disable=arguments-differ
-        context: Context, recipes: list[Recipe]
+    def search(
+        context: Context, recipes: list[Recipe], _num_results
     ) -> list[RecipeResult]:
         result = []
         for recipe in recipes:

@@ -7,7 +7,7 @@ from threading import Timer
 import ipywidgets as widgets
 import ipydatagrid
 from .recommender import Recommender
-from .recipe import RecipeResult
+from .recipe import RecipeResult, Recipe
 
 
 def debounced(wait, fn):
@@ -98,22 +98,27 @@ class ResultWidget(widgets.GridBox):
         for idx, recipe_result in enumerate(recipe_results):
             if idx >= self.num_results:
                 break
-            if recipe_result.recipe is not None:
-                self.recipes[idx]["name"].value = recipe_result.recipe.name
-                self.recipes[idx]["score"].value = f"{recipe_result.score:.2f}"
-                self.recipes[idx]["code"].value = recipe_result.recipe.code
-                self.recipes[idx]["copy"].value = copy_button_html(
-                    self._modify_copy_text(recipe_result.recipe.code)
-                )
-                self.recipes[idx][
-                    "description"
-                ].value = recipe_result.recipe.description
-            else:
-                self.recipes[idx]["name"].value = "Recipe not found"
-                self.recipes[idx]["score"].value = ""
-                self.recipes[idx]["code"].value = ""
-                self.recipes[idx]["copy"].value = copy_button_html()
-                self.recipes[idx]["description"].value = ""
+            self._fill_with_values(self.recipes[idx], recipe_result)
+        len_recipe_results = len(recipe_results)
+        if len_recipe_results < self.num_results:
+            for idx in range(len_recipe_results, self.num_results):
+                self._fill_with_values(self.recipes[idx], RecipeResult(0, None))  # type: ignore
+
+    def _fill_with_values(self, to_fill, recipe_result):
+        if recipe_result.recipe is not None:
+            to_fill["name"].value = recipe_result.recipe.name
+            to_fill["score"].value = f"{recipe_result.score:.2f}"
+            to_fill["code"].value = recipe_result.recipe.code
+            to_fill["copy"].value = copy_button_html(
+                self._modify_copy_text(recipe_result.recipe.code)
+            )
+            to_fill["description"].value = recipe_result.recipe.description
+        else:
+            to_fill["name"].value = "No Recipe Found"
+            to_fill["score"].value = ""
+            to_fill["code"].value = ""
+            to_fill["copy"].value = copy_button_html()
+            to_fill["description"].value = ""
 
     def _modify_copy_text(self, copy_text):
         return self.copy_prefix + copy_text + self.copy_suffix
