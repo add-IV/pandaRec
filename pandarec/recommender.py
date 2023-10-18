@@ -55,5 +55,5 @@ class Recommender:
     def set_search(self, search: str):
         self.context.query = search
 
-    def set_selection(self, selections: list[Selection]):
+    def set_selections(self, selections: list[Selection]):
         self.context.selections = selections

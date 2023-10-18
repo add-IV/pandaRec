@@ -75,7 +75,7 @@ class TestRecommender:
         recommender.import_recipes(self.recipes)
         recommender.set_search("fill")
         selections = [Selection(0, 0, 1, 1), Selection(0, 0, 1, 1)]
-        recommender.set_selection(selections)
+        recommender.set_selections(selections)
         assert recommender.context.query == "fill"
         assert recommender.context.selections == selections
         assert recommender.recipes == self.recipes
