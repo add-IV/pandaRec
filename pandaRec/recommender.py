@@ -33,9 +33,11 @@ class Recommender:
         self.strategy = strategy
         self.recommended_recipes = []
 
-    def recommend(self):
+    def recommend(self, num_results=10):
         """Recommends recipes based on the current context."""
-        self.recommended_recipes = self.strategy.search(self.context, self.recipes)
+        self.recommended_recipes = self.strategy.search(
+            self.context, self.recipes, num_results
+        )
 
     def show_results(self, n=None) -> list[RecipeResult]:
         """Returns the recommended recipes.

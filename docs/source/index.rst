@@ -17,4 +17,4 @@ Contents:
 
 .. toctree::
    getting_started
-   api_reference
+   strategies

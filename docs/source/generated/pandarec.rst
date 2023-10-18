@@ -1,0 +1,23 @@
+﻿pandarec
+========
+
+.. automodule:: pandarec
+
+   
+   
+   
+
+   
+   
+   
+
+   
+   
+   
+
+   
+   
+   
+
+
+

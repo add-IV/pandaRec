@@ -219,7 +219,7 @@ class PandaRecWidget(widgets.VBox):
     def _base_update_recommendations(self, _change):
         self.recommender.set_search(str(self.search_box.value))
         self.recommender.set_selection(self.data_grid.selected_cells)
-        self.recommender.recommend()
+        self.recommender.recommend(self.result_widget.num_results)
         self.result_widget.update(self.recommender.recommended_recipes)
 
     def update_data(self, df=None):
