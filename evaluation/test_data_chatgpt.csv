@@ -1,0 +1,29 @@
+read a file to a pandas dataframe
+show the first or last 5 rows
+show the column names
+drop unnecessary columns
+get the length of the dataframe
+show rows that meet a condition
+get a subset of the dataframe
+show the types of the columns
+only show certain data types
+insert a column in the specified position
+calculate the cumulative sum
+get a random sample of rows or columns
+query a dataset based on a condition
+get unique values of a column
+get the number of unique values of a column
+get the rank of the rows based on a clomun
+get rows that contain values from a list
+replace one value by another everywhere
+rename a column
+fill up null values
+group data
+get the percentage change from the previous value
+count how many entries are in each column
+how often does each value occur for a column
+give the frequency of how often one value in one column corresponds to one value in another
+bin the data into 5 bins
+give basic info about a column
+get the 5 largest values
+change a list of data into unique entries
