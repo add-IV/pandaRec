@@ -19,14 +19,17 @@ class RankingStrategy(ABC):
 
     @abstractmethod
     def search(self, context: Context, recipes: list[Recipe]) -> list[RecipeResult]:
-        pass
+        """Searches for recipes based on the context."""
 
 
 class NameSearch(RankingStrategy):
-    """A simple proof-of-concept ranking strategy that only searches for the query in the recipe name."""
+    """A simple proof-of-concept ranking strategy that only
+    searches for the query in the recipe name."""
 
     @staticmethod
-    def search(context: Context, recipes: list[Recipe]) -> list[RecipeResult]:
+    def search(  # pylint: disable=arguments-differ
+        context: Context, recipes: list[Recipe]
+    ) -> list[RecipeResult]:
         result = []
         for recipe in recipes:
             if context.query in recipe.name:
@@ -38,9 +41,17 @@ class FuzzySearchName(RankingStrategy):
     """A fuzzy search ranking strategy that uses the name of the recipe."""
 
     @staticmethod
-    def search(context: Context, recipes: list[Recipe]) -> list[RecipeResult]:
+    def search(  # pylint: disable=arguments-differ
+        context: Context, recipes: list[Recipe]
+    ) -> list[RecipeResult]:
         names = [recipe.name for recipe in recipes]
-        matches: list[tuple[str, int]] = process.extract(context.query, names, scorer=fuzz.WRatio, limit=20, processor=default_process)  # type: ignore
+        matches: list[tuple[str, int]] = process.extract(
+            context.query,
+            names,
+            scorer=fuzz.WRatio,
+            limit=20,
+            processor=default_process,
+        )  # type: ignore
         result = [
             RecipeResult(score=match[1], recipe=get_recipe_by_name(match[0], recipes))
             for match in matches
@@ -124,7 +135,10 @@ class SemanticSearch(RankingStrategy):
 
     def search(self, context: Context, recipes: list[Recipe]) -> list[RecipeResult]:
         query_embedding = self.model.encode(context.query, convert_to_tensor=True)
-        cos_scores = [util.cos_sim(query_embedding, embedding).item() for embedding in self.embeddings]  # type: ignore
+        cos_scores = [
+            util.cos_sim(query_embedding, embedding).item()  # type: ignore
+            for embedding in self.embeddings
+        ]
         result = [
             RecipeResult(score, recipe) for recipe, score in zip(recipes, cos_scores)
         ]
