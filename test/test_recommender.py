@@ -60,10 +60,10 @@ class TestRecommender:
         recommender = Recommender(self.recipes, df, searchAlgorithm)
         recommender.set_search("fill")
         recommender.recommend()
-        assert recommender.show_results(1) == [
+        assert recommender.get_results(1) == [
             RecipeResult(score=1, recipe=self.recipes[1])
         ]
-        assert recommender.show_results() == [
+        assert recommender.get_results() == [
             RecipeResult(score=1, recipe=self.recipes[1]),
             RecipeResult(score=1, recipe=self.recipes[2]),
         ]

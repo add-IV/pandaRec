@@ -1,12 +1,14 @@
 """This module contains the ranking strategies used to rank recipes based on a query."""
 from abc import ABC, abstractmethod
 import json
+import re
 import asyncio
 from typing import TYPE_CHECKING
 import websockets
 from rapidfuzz import fuzz, process
 from rapidfuzz.utils import default_process
 from sentence_transformers import SentenceTransformer, util
+from openai import ChatCompletion
 from openai.embeddings_utils import get_embedding, cosine_similarity, get_embeddings
 from .ml_embeddings import load_embeddings
 from .search_index import (
@@ -30,6 +32,9 @@ class RankingStrategy(ABC):
     ) -> list[RecipeResult]:
         """Searches for recipes based on the context."""
 
+    def feedback(self, context: Context, recipe: Recipe, positive: bool):
+        """Provides feedback to the ranking strategy."""
+
 
 class NameSearch(RankingStrategy):
     """A simple proof-of-concept ranking strategy that only
@@ -37,13 +42,13 @@ class NameSearch(RankingStrategy):
 
     @staticmethod
     def search(
-        context: Context, recipes: list[Recipe], _num_results
+        context: Context, recipes: list[Recipe], num_results=10
     ) -> list[RecipeResult]:
         result = []
         for recipe in recipes:
             if context.query in recipe.name:
                 result.append(RecipeResult(1, recipe))
-        return result
+        return result[:num_results]
 
 
 class FuzzySearchName(RankingStrategy):
@@ -77,7 +82,7 @@ class FuzzySearchDescription(RankingStrategy):
         self.ratio = ratio
 
     def search(
-        self, context: Context, recipes: list[Recipe], num_results
+        self, context: Context, recipes: list[Recipe], num_results=10
     ) -> list[RecipeResult]:
         result = []
         for recipe in recipes:
@@ -146,7 +151,7 @@ class SemanticSearch(RankingStrategy):
             self.embeddings = load_embeddings(path)
 
     def search(
-        self, context: Context, recipes: list[Recipe], num_results
+        self, context: Context, recipes: list[Recipe], num_results=10
     ) -> list[RecipeResult]:
         query_embedding = self.model.encode(context.query, convert_to_tensor=True)
         cos_scores = [
@@ -158,6 +163,25 @@ class SemanticSearch(RankingStrategy):
         ]
         result.sort(key=lambda recipe_result: recipe_result.score, reverse=True)
         return result[:num_results]
+
+
+class SemanticSearchFeedback(SemanticSearch):
+    def __init__(
+        self,
+        recipes: list[Recipe],
+        path: str = "",
+        model: str = "sentence-transformers/all-mpnet-base-v2",
+    ):
+        super().__init__(recipes, path, model)
+        self.feedback_list: list[tuple[str, str, bool]] = []
+
+    def feedback(self, context: Context, recipe: Recipe, positive: bool):
+        self.feedback_list.append((context.query, recipe.name, positive))
+
+    def save_feedback(self, path: str):
+        """Saves the feedback to a file."""
+        with open(path, "w") as file:
+            json.dump(self.feedback_list, file)
 
 
 class OpenAIEmbeddings(RankingStrategy):
@@ -179,7 +203,7 @@ class OpenAIEmbeddings(RankingStrategy):
             self.embeddings = load_embeddings(path)
 
     def search(
-        self, context: Context, recipes: list[Recipe], num_results
+        self, context: Context, recipes: list[Recipe], num_results=10
     ) -> list[RecipeResult]:
         if context.query == "":
             return []
@@ -195,26 +219,90 @@ class OpenAIEmbeddings(RankingStrategy):
         return result[:num_results]
 
 
-class WebSocketStrategy(RankingStrategy):
-    """A ranking strategy that uses semantic embeddings to search for recipes."""
+class OpenAIChatCompletion(RankingStrategy):
+    """A ranking strategy that uses OpenAI chat completions to search for recipes."""
 
-    def __init__(self):
+    def __init__(
+        self,
+        _recipes: list[Recipe],
+        model: str = "gpt-3.5-turbo",
+    ):
+        """The embeddings can be generated on the fly or loaded from a file."""
+        super().__init__()
+        self.model = model
+        self.messages = [
+            {
+                "role": "system",
+                "content": "You are a code recommendation system that recommends "
+                "code snippets from the python pandas library that can manipulate "
+                "a DataFrame based on a user query.\nThe recommendations should have "
+                "a name, a code snippet and a description.\nThe format is:\nname: "
+                "<name>\ncode: <code>\ndescription: <description>\nYou "
+                "will return at most 5 code snippets that are relevant to the task in order of relevance.\n\n",
+            }
+        ]
+
+    def search(
+        self, context: Context, _recipes: list[Recipe], num_results=10
+    ) -> list[RecipeResult]:
+        query = context.query
+        if query == "":
+            return []
+        payload = {
+            "role": "user",
+            "content": query,
+        }
+        messages_to_send = self.messages + [payload]
+        response = ChatCompletion.create(
+            model=self.model,
+            messages=messages_to_send,
+        )
+        result_text = response["choices"][0]["message"]["content"]  # type: ignore
+        return self.text_to_recipe_result(result_text)
+
+    def text_to_recipe_result(self, text: str) -> list[RecipeResult]:
+        """recipes from response text"""
+        names = re.findall("(?<=name: )(.*)", text)
+        descriptions = re.findall("(?<=description: )(.*)", text)
+        codes = re.findall("(?<=code: )(.*)", text)
+        if len(names) == 0:
+            return []
+        if len(names) != len(descriptions) or len(names) != len(codes):
+            return []
+        result = [
+            RecipeResult(1, Recipe(0, name, description, code, ""))
+            for name, description, code in zip(names, descriptions, codes)
+        ]
+        return result
+
+
+class WebSocketStrategy(RankingStrategy):
+    """A ranking strategy that offloads the ranking to a websocket."""
+
+    def __init__(self, uri="ws://localhost:8765"):
         import nest_asyncio
 
         super().__init__()
+        self.uri = uri
         nest_asyncio.apply()
 
     async def asearch(
         self, context: Context, _recipes: list[Recipe], num_results
     ) -> str:
         """async search"""
-        uri = "ws://localhost:8765"
-        payload = json.dumps({"query": context.query, "num_results": num_results})
+        payload = json.dumps(
+            {"type": "search", "query": context.query, "num_results": num_results}
+        )
         async with websockets.connect(  # pylint: disable=no-member # type: ignore
-            uri
+            self.uri
         ) as websocket:
             await websocket.send(payload)
             result = await websocket.recv()
+        return result
+
+    def search(self, context: Context, recipes: list[Recipe], num_results=10):
+        text_result = asyncio.run(self.asearch(context, recipes, num_results))
+        result = self.recipe_results_from_json(text_result)
         return result
 
     def recipe_results_from_json(self, json_string: str) -> list[RecipeResult]:
@@ -226,7 +314,20 @@ class WebSocketStrategy(RankingStrategy):
             result.append(RecipeResult(recipe_result["score"], recipe))
         return result
 
-    def search(self, context: Context, recipes: list[Recipe], num_results):
-        text_result = asyncio.run(self.asearch(context, recipes, num_results))
-        result = self.recipe_results_from_json(text_result)
-        return result
+    async def afeedback(self, context: Context, recipe: Recipe, positive: bool):
+        """async feedback"""
+        payload = json.dumps(
+            {
+                "type": "feedback",
+                "query": context.query,
+                "recipe": recipe.__dict__,
+                "positive": positive,
+            }
+        )
+        async with websockets.connect(  # pylint: disable=no-member # type: ignore
+            self.uri
+        ) as websocket:
+            await websocket.send(payload)
+
+    def feedback(self, context: Context, recipe: Recipe, positive: bool):
+        asyncio.run(self.afeedback(context, recipe, positive))

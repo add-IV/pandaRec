@@ -57,20 +57,21 @@ class ResultWidget(widgets.GridBox):
     copy_prefix = "widget.df."
     copy_suffix = "\\nwidget.update_data()"
 
-    def __init__(self, num_results) -> None:
+    def __init__(self, num_results, feedback_callback) -> None:
         super().__init__()
         self.layout = widgets.Layout(
-            grid_template_columns="2fr 1fr 4fr 1fr 16fr", width="100%"
+            grid_template_columns="2fr 1fr 4fr 1fr 16fr 1fr", width="100%"
         )
         self.change_num_results(num_results)
         self.update([])
+        self.feedback_callback = feedback_callback
 
     def change_num_results(self, num_results):
         """Changes the number of results to display."""
         self.num_results = num_results
         self.recipes = []
         children = []
-        for _ in range(num_results):
+        for i in range(num_results):
             self.recipes.append(
                 {
                     "name": widgets.Label(),
@@ -78,7 +79,7 @@ class ResultWidget(widgets.GridBox):
                     "code": widgets.Label(),
                     "copy": widgets.HTML(copy_button_html(), button_style="primary"),
                     "description": widgets.Textarea(
-                        layout=widgets.Layout(width="100%")
+                        layout=widgets.Layout(width="100%", height="fill")
                     ),
                 }
             )
@@ -89,6 +90,12 @@ class ResultWidget(widgets.GridBox):
                     self.recipes[-1]["code"],
                     self.recipes[-1]["copy"],
                     self.recipes[-1]["description"],
+                    widgets.VBox(
+                        [
+                            FeedbackButton(True, i, callback=self._handle_feedback),
+                            FeedbackButton(False, i, callback=self._handle_feedback),
+                        ]
+                    ),
                 ]
             )
         self.children = children
@@ -123,19 +130,39 @@ class ResultWidget(widgets.GridBox):
     def _modify_copy_text(self, copy_text):
         return self.copy_prefix + copy_text + self.copy_suffix
 
+    def _handle_feedback(self, b):
+        self.feedback_callback(b)
+
+
+class FeedbackButton(widgets.Button):
+    """Widget for the feedback button."""
+
+    def __init__(self, positive, idx, callback):
+        super().__init__()
+        self.layout = widgets.Layout(height="50%")
+        self.positive = positive
+        if self.positive:
+            self.description = "+"
+            self.button_style = "success"
+        else:
+            self.description = "-"
+            self.button_style = "danger"
+        self.idx = idx
+        self.on_click(callback)
+
 
 class PandaRecWidget(widgets.VBox):
     """Widget for the main UI."""
 
     def __init__(
-        self, recommender: Recommender, num_results=8, debounce=False, **kwargs
+        self, recommender: Recommender, num_results=8, debounce=0, **kwargs
     ) -> None:
         """Initializes the PandaRecWidget.
 
         Args:
             recommender: The Recommender object to use.
             num_results: The number of results to display.
-            debounce: Whether to debounce the search box.
+            debounce: How much to debounce the search box.
 
         Keyword Args:
             datagrid_layout: The layout of the data grid."""
@@ -143,12 +170,12 @@ class PandaRecWidget(widgets.VBox):
 
         self.recommender = recommender
         self.df = self.recommender.context.data
-        if debounce:
-            self.update_recommendations = debounced(
-                0.5, self._base_update_recommendations
-            )
-        else:
+        if debounce == 0:
             self.update_recommendations = self._base_update_recommendations
+        else:
+            self.update_recommendations = debounced(
+                debounce, self._base_update_recommendations
+            )
 
         datagrid_layout = kwargs.pop("datagrid_layout", {})
         self.data_grid = ipydatagrid.DataGrid(
@@ -159,7 +186,7 @@ class PandaRecWidget(widgets.VBox):
 
         self.search_box = widgets.Text(placeholder="Search term", description="Search:")
 
-        self.result_widget = ResultWidget(num_results)
+        self.result_widget = ResultWidget(num_results, self._handle_feedback)
 
         self.options = widgets.VBox(
             [
@@ -238,3 +265,6 @@ class PandaRecWidget(widgets.VBox):
         self.data_grid.observe(self.update_recommendations, names="selected_cells")  # type: ignore
         self.df = df
         self.recommender.context.data = df
+
+    def _handle_feedback(self, b):
+        self.recommender.handle_feedback(b.positive, b.idx)

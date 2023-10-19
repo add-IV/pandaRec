@@ -39,7 +39,7 @@ class Recommender:
             self.context, self.recipes, num_results
         )
 
-    def show_results(self, n=None) -> list[RecipeResult]:
+    def get_results(self, n=None) -> list[RecipeResult]:
         """Returns the recommended recipes.
 
         Args:
@@ -57,3 +57,9 @@ class Recommender:
 
     def set_selections(self, selections: list[Selection]):
         self.context.selections = selections
+
+    def handle_feedback(self, positive: bool, idx: int):
+        if idx >= len(self.recommended_recipes):
+            return
+        recipe = self.recommended_recipes[idx].recipe
+        self.strategy.feedback(self.context, recipe, positive)

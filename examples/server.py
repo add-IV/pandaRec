@@ -1,15 +1,16 @@
 #!/usr/bin/env python
+print("hi")
 
 import asyncio
-import sys
 import json
 import websockets
+import sys
+
 
 sys.path.append("../")
-from pandarec.recipe import Recipe, RecipeResult
+from pandarec.recipe import Recipe
 from pandarec.context import Context
-from pandarec.strategies import SemanticSearch
-from sentence_transformers import util
+from pandarec.strategies import SemanticSearchFeedback
 
 
 with open("../recipes/from_docstrings/recipes.json", "r") as file:
@@ -17,47 +18,33 @@ with open("../recipes/from_docstrings/recipes.json", "r") as file:
 
 recipes = [Recipe.from_dict(recipe) for recipe in recipes]
 
+print("loaded recipes")
 
-class SemanticSearchNoSorting(SemanticSearch):
-    def search_no_sort(self, context: Context, recipes: list[Recipe], num_results=10):
-        query_embedding = self.model.encode(context.query, convert_to_tensor=True)
-        cos_scores = [
-            util.cos_sim(query_embedding, embedding).item()  # type: ignore
-            for embedding in self.embeddings
-        ]
-        result = [
-            RecipeResult(score, recipe) for recipe, score in zip(recipes, cos_scores)
-        ]
-        result.sort(key=lambda recipe_result: recipe_result.score, reverse=True)
-        return result[:num_results]
-
-
-strategy = SemanticSearchNoSorting(
+strategy = SemanticSearchFeedback(
     recipes, path="../recipes/from_docstrings/embeddings.pt"
 )
 
+print("loaded strategy")
+
 
 async def search(websocket):
-    query = await websocket.recv()
-
-    payload = json.loads(query)
-
-    print(f"< {payload['query']}")
-
-    context = Context(None, None, query)  # type: ignore
-
-    result = strategy.search_no_sort(
-        context, recipes, num_results=payload["num_results"]
-    )
-
-    payload = [
-        {"score": recipe_result.score, "recipe": recipe_result.recipe.__dict__}
-        for recipe_result in result
-    ]
-
-    print(f"> {json.dumps(payload)}")
-
-    await websocket.send(json.dumps(payload))
+    payload_string = await websocket.recv()
+    payload = json.loads(payload_string)
+    if payload["type"] == "search":
+        print(f"< {payload['query']}")
+        context = Context(None, None, payload_string)  # type: ignore
+        result = strategy.search(context, recipes, num_results=payload["num_results"])
+        payload = [
+            {"score": recipe_result.score, "recipe": recipe_result.recipe.__dict__}
+            for recipe_result in result
+        ]
+        print(f"> {json.dumps(payload)}")
+        await websocket.send(json.dumps(payload))
+    elif payload["type"] == "feedback":
+        context = Context(None, None, payload["query"])  # type: ignore
+        recipe = Recipe.from_dict(payload["recipe"])
+        strategy.feedback(context, recipe, payload["positive"])
+        strategy.save_feedback("feedback.txt")
 
 
 async def main():
