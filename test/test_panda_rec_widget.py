@@ -35,7 +35,7 @@ class TestDebounced:
 
 class TestResultWidget:
     num_results = 10
-    result_widget = ResultWidget(num_results)
+    result_widget = ResultWidget(num_results, None)
 
     def test_result_widget(self):
         assert self.result_widget.num_results == self.num_results
