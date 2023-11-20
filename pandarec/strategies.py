@@ -224,7 +224,6 @@ class OpenAIChatCompletion(RankingStrategy):
 
     def __init__(
         self,
-        _recipes: list[Recipe],
         model: str = "gpt-3.5-turbo",
     ):
         """The embeddings can be generated on the fly or loaded from a file."""
