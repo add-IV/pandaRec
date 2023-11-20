@@ -18,7 +18,6 @@ Frederick Vandermoeten
 - Approach
 - Evaluation
 - Conclusion
-- References
 
 ---
 <!-- header: Introduction: Pandas -->
@@ -60,7 +59,6 @@ Frederick Vandermoeten
 - **Approach**
 - Evaluation
 - Conclusion
-- References
 
 ---
 <!-- header: Approach: My Solution -->
@@ -131,7 +129,6 @@ Frederick Vandermoeten
 - Approach
 - **Evaluation**
 - Conclusion
-- References
 
 ---
 <!-- header: Evaluation: Metrics -->
@@ -244,7 +241,6 @@ table {
 - Approach
 - Evaluation
 - **Conclusion**
-- References
 
 ---
 <!-- header: Conclusion: Summary -->
@@ -264,4 +260,5 @@ table {
 - Improve the semantic search by fine-tuning the model
 - Improve the recipe quality
 - Get rid of most algorithms
-- 
+- Port to standalone application or VSCode extension
+- Easy to implement more ranking strategies
