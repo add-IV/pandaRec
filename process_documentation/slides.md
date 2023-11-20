@@ -215,7 +215,7 @@ table {
 ### Accuracy on different recipe datasets
 
 |                        | docstring | cookbook | snippets |
-|------------------------|-----------|----------|----------|
+| ---------------------- | --------- | -------- | -------- |
 | NameSearch             | 0.00      | 0.00     | 0.00     |
 | FuzzySearchName        | 0.41      | 0.45     | 0.53     |
 | FuzzySearchDescription | 0.27      | 0.31     | 0.48     |
@@ -247,6 +247,21 @@ table {
 - References
 
 ---
-<!-- header: Conclusion -->
-### Conclusion
+<!-- header: Conclusion: Summary -->
+### Summary
 
+- Lexical search is not accurate
+- Using recipes together with semantic search is the best approach
+  - fast
+  - accurate
+  - can still be improved
+- Jupyter Notebooks good for prototyping
+
+---
+<!-- header: Conclusion: Future Work -->
+### Future Work
+
+- Improve the semantic search by fine-tuning the model
+- Improve the recipe quality
+- Get rid of most algorithms
+- 
